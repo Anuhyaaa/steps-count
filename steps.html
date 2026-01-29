@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrack - Step Counter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">FitTrack</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="steps.html" class="active">Steps</a></li>
+                <li><a href="weekly.html">Weekly</a></li>
+                <li><a href="water.html">Water</a></li>
+                <li><a href="quotes.html">Quotes</a></li>
+                <li><a href="nutrition.html">Nutrition</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="progress.html">Progress</a></li>
+                <li><a href="distance.html">Distance</a></li>
+                <li><a href="settings.html">Settings</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">Step Counter</h1>
+        <p class="page-subtitle" id="dateDisplay"></p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="card">
+            <!-- Circular Progress Ring -->
+            <div class="progress-container">
+                <svg class="progress-ring" width="280" height="280">
+                    <circle class="progress-ring-circle-bg" 
+                            stroke="#e0d5c7" 
+                            stroke-width="12" 
+                            fill="transparent" 
+                            r="130" 
+                            cx="140" 
+                            cy="140"/>
+                    <circle class="progress-ring-circle" 
+                            stroke="#c49a6c" 
+                            stroke-width="12" 
+                            fill="transparent" 
+                            r="130" 
+                            cx="140" 
+                            cy="140"/>
+                </svg>
+                
+                <!-- Center Content -->
+                <div class="progress-content">
+                    <div class="step-count" id="stepCount">0</div>
+                    <div class="step-label">Steps</div>
+                </div>
+            </div>
+
+            <!-- Daily Goal Text -->
+            <div class="daily-goal-text">Daily Goal: 10,000 steps</div>
+
+            <!-- Calories Display -->
+            <div class="calories-container">
+                <div class="calories-icon">🔥</div>
+                <div class="calories-text">
+                    <span id="calories">0</span> kcal burned
+                </div>
+            </div>
+
+            <!-- Reset Button -->
+            <button class="reset-btn" id="resetBtn">Reset Steps</button>
+
+            <!-- Status Message -->
+            <div class="status-message" id="statusMessage">
+                Tap "Allow" to enable step tracking
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 FitTrack. All rights reserved.</p>
+    </footer>
+
+    <script src="theme.js"></script>
+    <script src="steps.js"></script>
+</body>
+</html>

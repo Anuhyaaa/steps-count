@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrack - Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">FitTrack</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="steps.html">Steps</a></li>
+                <li><a href="weekly.html">Weekly</a></li>
+                <li><a href="water.html">Water</a></li>
+                <li><a href="quotes.html">Quotes</a></li>
+                <li><a href="nutrition.html">Nutrition</a></li>
+                <li><a href="profile.html" class="active">Profile</a></li>
+                <li><a href="progress.html">Progress</a></li>
+                <li><a href="distance.html">Distance</a></li>
+                <li><a href="settings.html">Settings</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">User Profile</h1>
+        <p class="page-subtitle">Manage your fitness profile</p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="card profile-container">
+            <!-- Avatar -->
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Anuhya" alt="Profile Avatar" class="profile-avatar">
+            
+            <!-- Profile Info -->
+            <h2 class="profile-name">Anuhya</h2>
+            <p class="profile-role">Fitness Enthusiast</p>
+
+            <!-- Weight Form -->
+            <div class="form-group">
+                <label for="weightInput" class="form-label">Weight (kg)</label>
+                <input type="number" id="weightInput" class="form-input" placeholder="Enter your weight" min="1" max="500">
+            </div>
+
+            <div id="weightDisplay" style="text-align: center; margin-bottom: 1.5rem; font-size: 1.1rem; color: var(--accent-color);"></div>
+
+            <button class="btn btn-full" id="saveWeightBtn">Save Weight</button>
+
+            <div class="status-message" id="statusMessage" style="margin-top: 1.5rem; display: none;">
+                Profile updated successfully!
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 FitTrack. All rights reserved.</p>
+    </footer>
+
+    <script src="theme.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>

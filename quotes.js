@@ -1,0 +1,65 @@
+// Fitness quotes array
+const quotes = [
+    { text: "The only bad workout is the one that didn't happen.", author: "Unknown" },
+    { text: "Take care of your body. It's the only place you have to live.", author: "Jim Rohn" },
+    { text: "Fitness is not about being better than someone else. It's about being better than you used to be.", author: "Khloe Kardashian" },
+    { text: "The groundwork for all happiness is good health.", author: "Leigh Hunt" },
+    { text: "Your body can stand almost anything. It's your mind that you have to convince.", author: "Unknown" },
+    { text: "Success isn't always about greatness. It's about consistency.", author: "Dwayne Johnson" },
+    { text: "The only way to finish is to start.", author: "Unknown" },
+    { text: "Don't wish for a good body, work for it.", author: "Unknown" },
+    { text: "Sweat is fat crying.", author: "Unknown" },
+    { text: "You don't have to be extreme, just consistent.", author: "Unknown" },
+    { text: "A one hour workout is 4% of your day. No excuses.", author: "Unknown" },
+    { text: "Exercise is a celebration of what your body can do, not a punishment for what you ate.", author: "Unknown" },
+    { text: "The pain you feel today will be the strength you feel tomorrow.", author: "Unknown" },
+    { text: "Believe in yourself and all that you are. Know that there is something inside you that is greater than any obstacle.", author: "Christian D. Larson" },
+    { text: "Fitness is not a destination, it is a way of life.", author: "Unknown" }
+];
+
+// DOM elements
+const quoteText = document.getElementById('quoteText');
+const quoteAuthor = document.getElementById('quoteAuthor');
+const newQuoteBtn = document.getElementById('newQuoteBtn');
+
+// Get daily quote (same quote per day)
+function getDailyQuote() {
+    const today = new Date().toDateString();
+    const savedQuoteDate = localStorage.getItem('fitTrackQuoteDate');
+    const savedQuoteIndex = localStorage.getItem('fitTrackQuoteIndex');
+    
+    if (savedQuoteDate !== today || !savedQuoteIndex) {
+        // Generate new daily quote
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        localStorage.setItem('fitTrackQuoteDate', today);
+        localStorage.setItem('fitTrackQuoteIndex', randomIndex.toString());
+        return quotes[randomIndex];
+    }
+    
+    return quotes[parseInt(savedQuoteIndex, 10)];
+}
+
+// Get random quote (for manual refresh)
+function getRandomQuote() {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    return quotes[randomIndex];
+}
+
+// Display quote
+function displayQuote(quote) {
+    quoteText.textContent = `"${quote.text}"`;
+    quoteAuthor.textContent = `— ${quote.author}`;
+}
+
+// Initialize
+function init() {
+    const dailyQuote = getDailyQuote();
+    displayQuote(dailyQuote);
+    
+    newQuoteBtn.addEventListener('click', () => {
+        const randomQuote = getRandomQuote();
+        displayQuote(randomQuote);
+    });
+}
+
+init();

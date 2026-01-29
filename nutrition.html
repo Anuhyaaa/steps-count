@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrack - Nutrition Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="theme.js"></script>
+    <style>
+        /* Override container flex behavior for nutrition page */
+        .container.nutrition-container {
+            display: block !important;
+            flex-direction: column !important;
+            justify-content: flex-start !important;
+            align-items: stretch !important;
+            min-height: 100vh !important;
+            padding: 20px !important;
+            max-width: 1400px;
+            margin: 0 auto;
+            visibility: visible !important;
+            overflow: visible !important;
+        }
+
+        .nutrition-heading {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #5a3e2b;
+            text-align: center;
+            margin-bottom: 1rem;
+            display: block !important;
+            visibility: visible !important;
+        }
+
+        .nutrition-intro {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #3b2a20;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        .food-grid {
+            display: grid !important;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 1.5rem;
+            visibility: visible !important;
+            width: 100%;
+            opacity: 1 !important;
+        }
+
+        .food-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            visibility: visible !important;
+            min-height: 300px;
+            opacity: 1 !important;
+        }
+
+        .food-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .food-img-placeholder {
+            width: 100%;
+            height: 180px;
+            background-color: #e6dccc;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5a3e2b;
+            font-size: 14px;
+            margin-bottom: 1rem;
+        }
+
+        .food-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #5a3e2b;
+            margin-bottom: 0.5rem;
+            display: block !important;
+            visibility: visible !important;
+        }
+
+        .food-benefit {
+            font-size: 0.9rem;
+            color: #3b2a20;
+            line-height: 1.6;
+            opacity: 0.9 !important;
+            display: block !important;
+            visibility: visible !important;
+        }
+
+        /* Tablet: 2 columns */
+        @media (min-width: 600px) {
+            .nutrition-heading {
+                font-size: 2rem;
+            }
+
+            .nutrition-intro {
+                font-size: 1.05rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .food-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .food-card {
+                padding: 1.8rem;
+            }
+
+            .food-img-placeholder {
+                height: 200px;
+            }
+
+            .food-name {
+                font-size: 1.25rem;
+            }
+
+            .food-benefit {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Laptop: 3 columns */
+        @media (min-width: 1024px) {
+            .nutrition-heading {
+                font-size: 2.2rem;
+            }
+
+            .nutrition-intro {
+                font-size: 1.1rem;
+                max-width: 800px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 3rem;
+            }
+
+            .food-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+
+            .food-card {
+                padding: 2rem;
+            }
+
+            .food-img-placeholder {
+                height: 220px;
+            }
+
+            .food-name {
+                font-size: 1.3rem;
+            }
+
+            .food-benefit {
+                font-size: 1rem;
+            }
+        }
+
+        /* Large Desktop: 4 columns */
+        @media (min-width: 1440px) {
+            .food-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">FitTrack</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="steps.html">Steps</a></li>
+                <li><a href="weekly.html">Weekly</a></li>
+                <li><a href="water.html">Water</a></li>
+                <li><a href="quotes.html">Quotes</a></li>
+                <li><a href="nutrition.html" class="active">Nutrition</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="progress.html">Progress</a></li>
+                <li><a href="distance.html">Distance</a></li>
+                <li><a href="settings.html">Settings</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">Fitness Nutrition Guide 🥗</h1>
+        <p class="page-subtitle">Fuel your fitness journey</p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container nutrition-container">
+        <h2 class="nutrition-heading">Fitness Nutrition Guide</h2>
+        
+        <p class="nutrition-intro">
+            Healthy food plays a key role in achieving your fitness goals. Here are essential foods to include in your daily routine.
+        </p>
+
+        <div class="food-grid">
+            <!-- Food Card 1: Oats -->
+            <div class="food-card">
+                <div class="food-img-placeholder">
+                    Image will be added later
+                </div>
+                <h3 class="food-name">Oats</h3>
+                <p class="food-benefit">Provides long-lasting energy.</p>
+            </div>
+
+            <!-- Food Card 2: Eggs -->
+            <div class="food-card">
+                <div class="food-img-placeholder">
+                    Image will be added later
+                </div>
+                <h3 class="food-name">Eggs</h3>
+                <p class="food-benefit">High-quality protein for muscle building.</p>
+            </div>
+
+            <!-- Food Card 3: Banana -->
+            <div class="food-card">
+                <div class="food-img-placeholder">
+                    Image will be added later
+                </div>
+                <h3 class="food-name">Banana</h3>
+                <p class="food-benefit">Quick energy and potassium source.</p>
+            </div>
+
+            <!-- Food Card 4: Chicken Breast -->
+            <div class="food-card">
+                <div class="food-img-placeholder">
+                    Image will be added later
+                </div>
+                <h3 class="food-name">Chicken Breast</h3>
+                <p class="food-benefit">Lean protein for muscle recovery.</p>
+            </div>
+
+            <!-- Food Card 5: Brown Rice -->
+            <div class="food-card">
+                <div class="food-img-placeholder">
+                    Image will be added later
+                </div>
+                <h3 class="food-name">Brown Rice</h3>
+                <p class="food-benefit">Healthy carbs for sustained energy.</p>
+            </div>
+
+            <!-- Food Card 6: Almonds -->
+            <div class="food-card">
+                <div class="food-img-placeholder">
+                    Image will be added later
+                </div>
+                <h3 class="food-name">Almonds</h3>
+                <p class="food-benefit">Healthy fats and vitamins.</p>
+            </div>
+
+            <!-- Food Card 7: Greek Yogurt -->
+            <div class="food-card">
+                <div class="food-img-placeholder">
+                    Image will be added later
+                </div>
+                <h3 class="food-name">Greek Yogurt</h3>
+                <p class="food-benefit">High protein and gut-friendly.</p>
+            </div>
+
+            <!-- Food Card 8: Spinach -->
+            <div class="food-card">
+                <div class="food-img-placeholder">
+                    Image will be added later
+                </div>
+                <h3 class="food-name">Spinach</h3>
+                <p class="food-benefit">Rich in iron and antioxidants.</p>
+            </div>
+
+            <!-- Food Card 9: Salmon -->
+            <div class="food-card">
+                <div class="food-img-placeholder">
+                    Image will be added later
+                </div>
+                <h3 class="food-name">Salmon</h3>
+                <p class="food-benefit">Omega-3 for heart health.</p>
+            </div>
+
+            <!-- Food Card 10: Avocado -->
+            <div class="food-card">
+                <div class="food-img-placeholder">
+                    Image will be added later
+                </div>
+                <h3 class="food-name">Avocado</h3>
+                <p class="food-benefit">Healthy fats for overall wellness.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 FitTrack. All rights reserved.</p>
+    </footer>
+
+    <script src="theme.js"></script>
+</body>
+</html>
