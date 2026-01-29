@@ -149,6 +149,15 @@ For best experience on mobile:
 
 ---
 
+## 💡 Future Enhancements
+
+- PWA install support  
+- Step goal celebration animation  
+- Monthly activity history  
+- Real push notifications  
+
+---
+
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to:
@@ -158,17 +167,16 @@ Contributions are welcome! Feel free to:
 
 ---
 
-## 📄 License
+## 👩‍💻 Author
 
-This project is open source and available under the [MIT License](LICENSE).
+**Anuhya**  
+Fitness Enthusiast & Frontend Developer  
 
 ---
 
-## 👤 Author
+## 📄 License
 
-**Anuhya**  
-- GitHub: [@Anuhyaaa](https://github.com/Anuhyaaa)
-- Repository: [steps-count](https://github.com/Anuhyaaa/steps-count)
+This project is for educational and portfolio use.
 
 ---
 
