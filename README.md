@@ -47,13 +47,15 @@ It works completely in the browser with no backend required.
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Built With
 
-- **HTML5** - Structure and semantic markup
-- **CSS3** - Responsive design with CSS variables
-- **JavaScript (ES6+)** - Interactive features and LocalStorage
-- **Motion API** - Step counting via device sensors
-- **Geolocation API** - Distance tracking
+- HTML  
+- CSS  
+- JavaScript  
+- Browser Sensor APIs (DeviceMotion & Geolocation)  
+- LocalStorage  
+
+(No backend or database required)
 
 ---
 
