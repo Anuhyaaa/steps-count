@@ -288,6 +288,7 @@ body {
     align-items: center;
     padding: 1rem 0.8rem;
     min-height: calc(100vh - 140px);
+    min-height: calc(100svh - 140px); /* iOS Safari fix */
     width: 100%;
 }
 
@@ -1125,51 +1126,102 @@ body.dark .stat-label {
 }
 
 /* MOBILE: max-width 480px - Fix footer overlap */
+/* MOBILE: max-width 480px - Fix iPhone layout issues */
 @media (max-width: 480px) {
+    /* Fix body padding and iOS safe area */
     body {
-        padding-bottom: 75px; /* Ensure content doesn't hide behind footer */
+        padding-bottom: 0; /* Remove extra padding since footer is static */
+        padding-bottom: env(safe-area-inset-bottom); /* iOS safe area */
     }
 
+    /* Make footer static on mobile to prevent overlap */
+    .footer {
+        position: static;
+        margin-top: auto;
+    }
+
+    /* Container with iOS-friendly viewport height */
     .container {
-        padding: 1rem 0.8rem 1rem;
+        padding: 0.8rem 0.8rem 1.5rem;
         min-height: auto;
+        min-height: calc(100svh - 140px); /* iOS Safari */
     }
 
+    /* Smaller step counter card to fit mobile */
     .step-counter-card {
-        max-width: 340px;
-        padding: 1.2rem 0.8rem;
+        max-width: 320px;
+        padding: 1rem 0.8rem;
+        margin: 0 auto;
+        max-height: none;
     }
 
+    /* Smaller progress ring - fully visible, no clipping */
     .progress-container {
-        max-width: 180px;
-        margin-bottom: 1rem;
+        max-width: 160px;
+        width: 160px;
+        margin: 0 auto 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .progress-ring {
-        width: 180px;
-        height: 180px;
+        width: 160px;
+        height: 160px;
     }
 
-    .daily-goal-text {
-        font-size: 0.85rem;
-        margin-bottom: 1rem;
+    .progress-ring-circle-bg,
+    .progress-ring-circle {
+        r: 70;
+        cx: 80;
+        cy: 80;
     }
 
-    .calories-container {
-        padding: 0.9rem;
-        margin-bottom: 1.2rem;
+    /* Adjust step count text size */
+    .step-count {
+        font-size: 2rem;
     }
 
-    .btn,
-    .reset-btn {
-        padding: 0.8rem 1.2rem;
+    .step-label {
         font-size: 0.9rem;
     }
 
-    .status-message {
+    /* Compact spacing */
+    .daily-goal-text {
+        font-size: 0.8rem;
+        padding: 0.6rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .calories-container {
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .calories-icon {
+        font-size: 1.5rem;
+    }
+
+    .calories-text {
         font-size: 0.85rem;
-        padding: 0.7rem;
-        margin-top: 1rem;
+    }
+
+    #calories {
+        font-size: 1rem;
+    }
+
+    /* Compact buttons */
+    .btn,
+    .reset-btn {
+        padding: 0.75rem 1rem;
+        font-size: 0.85rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .status-message {
+        font-size: 0.8rem;
+        padding: 0.6rem;
+        margin-top: 0.8rem;
     }
 }
 
