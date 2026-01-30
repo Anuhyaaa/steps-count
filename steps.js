@@ -1,18 +1,21 @@
 // Configuration
 const DAILY_GOAL = 10000;
 const CALORIES_PER_STEP = 0.04;
-const STEP_THRESHOLD = 1.3;
+const STEP_THRESHOLD = 1.2;
 const STEP_DELAY = 250;
 
 // State variables
 let stepCount = 0;
 let lastStepTime = 0;
 let lastAcceleration = 0;
+let isTracking = false;
+let motionListener = null;
 
 // DOM elements
 const stepCountElement = document.getElementById('stepCount');
 const caloriesElement = document.getElementById('calories');
 const resetBtn = document.getElementById('resetBtn');
+const startTrackingBtn = document.getElementById('startTrackingBtn');
 const statusMessage = document.getElementById('statusMessage');
 const progressCircle = document.querySelector('.progress-ring-circle');
 const dateDisplay = document.getElementById('dateDisplay');
@@ -28,8 +31,32 @@ function init() {
     displayDate();
     loadStepsFromStorage();
     updateDisplay();
-    requestMotionPermission();
+    
+    // Setup event listeners
     resetBtn.addEventListener('click', resetSteps);
+    startTrackingBtn.addEventListener('click', handleStartTracking);
+    
+    // Check device capabilities
+    if (typeof DeviceMotionEvent === 'undefined') {
+        statusMessage.textContent = '✗ Device motion not supported on this device';
+        statusMessage.style.backgroundColor = '#ffebee';
+        statusMessage.style.borderLeftColor = '#f44336';
+        return;
+    }
+    
+    // iOS devices need explicit permission via button click
+    if (needsPermission()) {
+        startTrackingBtn.style.display = 'block';
+        statusMessage.textContent = '📱 Tap "Start Step Tracking" to enable motion sensor';
+        statusMessage.style.backgroundColor = '#fff9f0';
+        statusMessage.style.borderLeftColor = '#c49a6c';
+    } else {
+        // Android and other devices - auto-start
+        startStepDetection();
+        statusMessage.textContent = '✓ Motion sensor active';
+        statusMessage.style.backgroundColor = '#e8f5e9';
+        statusMessage.style.borderLeftColor = '#4caf50';
+    }
 }
 
 // Display date
@@ -79,41 +106,57 @@ function saveToWeeklyData(dateString, steps) {
     localStorage.setItem('fitTrackWeekly', JSON.stringify(weeklyData));
 }
 
-// Request motion permission
+// Check if permission is needed (iOS 13+)
+function needsPermission() {
+    return typeof DeviceMotionEvent !== 'undefined' && 
+           typeof DeviceMotionEvent.requestPermission === 'function';
+}
+
+// Request motion permission (iOS)
 async function requestMotionPermission() {
-    if (typeof DeviceMotionEvent !== 'undefined') {
-        if (typeof DeviceMotionEvent.requestPermission === 'function') {
-            try {
-                const permission = await DeviceMotionEvent.requestPermission();
-                if (permission === 'granted') {
-                    startStepDetection();
-                    statusMessage.textContent = '✓ Step tracking active';
-                    statusMessage.style.backgroundColor = '#e8f5e9';
-                    statusMessage.style.borderLeftColor = '#4caf50';
-                } else {
-                    statusMessage.textContent = '✗ Motion permission denied';
-                    statusMessage.style.backgroundColor = '#ffebee';
-                    statusMessage.style.borderLeftColor = '#f44336';
-                }
-            } catch (error) {
-                statusMessage.textContent = '✗ Could not request permission';
-            }
-        } else {
+    try {
+        const permission = await DeviceMotionEvent.requestPermission();
+        if (permission === 'granted') {
             startStepDetection();
-            statusMessage.textContent = '✓ Step tracking active';
+            startTrackingBtn.style.display = 'none';
+            statusMessage.textContent = '✓ Motion sensor active';
             statusMessage.style.backgroundColor = '#e8f5e9';
             statusMessage.style.borderLeftColor = '#4caf50';
+            return true;
+        } else {
+            statusMessage.textContent = '✗ Motion permission denied. Please enable in Settings.';
+            statusMessage.style.backgroundColor = '#ffebee';
+            statusMessage.style.borderLeftColor = '#f44336';
+            return false;
         }
-    } else {
-        statusMessage.textContent = '✗ Device motion not supported';
+    } catch (error) {
+        statusMessage.textContent = '✗ Could not request permission: ' + error.message;
         statusMessage.style.backgroundColor = '#ffebee';
         statusMessage.style.borderLeftColor = '#f44336';
+        return false;
+    }
+}
+
+// Handle start tracking button click
+async function handleStartTracking() {
+    if (needsPermission()) {
+        await requestMotionPermission();
+    } else {
+        startStepDetection();
+        startTrackingBtn.style.display = 'none';
+        statusMessage.textContent = '✓ Motion sensor active';
+        statusMessage.style.backgroundColor = '#e8f5e9';
+        statusMessage.style.borderLeftColor = '#4caf50';
     }
 }
 
 // Start detection
 function startStepDetection() {
-    window.addEventListener('devicemotion', handleMotion);
+    if (isTracking) return; // Prevent duplicate listeners
+    
+    isTracking = true;
+    motionListener = handleMotion.bind(this);
+    window.addEventListener('devicemotion', motionListener);
 }
 
 // Handle motion

@@ -367,19 +367,32 @@ body {
     text-align: center;
 }
 
+/* Step Counter Card - Centered and properly sized */
+.step-counter-card {
+    max-width: 380px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 /* Progress Ring Container - Mobile First */
 .progress-container {
     position: relative;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 1.5rem;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
+    max-width: 280px;
 }
 
 .progress-ring {
     transform: rotate(-90deg);
     width: 200px;
     height: 200px;
+    display: block;
 }
 
 .progress-ring-circle {
@@ -403,6 +416,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+    width: 100%;
 }
 
 .step-count {
@@ -1164,6 +1178,11 @@ body.dark .stat-label {
         max-width: 500px;
     }
 
+    .step-counter-card {
+        max-width: 420px;
+        padding: 2rem 1.5rem;
+    }
+
     /* Progress Ring - Medium size */
     .progress-ring {
         width: 240px;
@@ -1384,6 +1403,11 @@ body.dark .stat-label {
     .card {
         padding: 2.5rem 2rem;
         max-width: 450px;
+    }
+
+    .step-counter-card {
+        max-width: 450px;
+        padding: 2.5rem 2rem;
     }
 
     /* Progress Ring - Full size */

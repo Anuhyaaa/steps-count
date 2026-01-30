@@ -38,7 +38,7 @@
 
     <!-- Main Content -->
     <main class="container">
-        <div class="card">
+        <div class="card step-counter-card">
             <!-- Circular Progress Ring -->
             <div class="progress-container">
                 <svg class="progress-ring" width="280" height="280">
@@ -76,12 +76,15 @@
                 </div>
             </div>
 
+            <!-- Start Tracking Button (for iPhone) -->
+            <button class="btn" id="startTrackingBtn" style="display: none;">Start Step Tracking</button>
+
             <!-- Reset Button -->
             <button class="reset-btn" id="resetBtn">Reset Steps</button>
 
             <!-- Status Message -->
             <div class="status-message" id="statusMessage">
-                Tap "Allow" to enable step tracking
+                Loading step tracker...
             </div>
         </div>
     </main>
