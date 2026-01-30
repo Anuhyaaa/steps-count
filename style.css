@@ -393,9 +393,8 @@ body {
 }
 
 .progress-ring {
-    transform: rotate(-90deg);
-    width: 180px;
-    height: 180px;
+    width: 160px;
+    height: 160px;
     display: block;
     margin: 0 auto;
 }
@@ -1319,15 +1318,8 @@ body.dark .stat-label {
 
     /* Progress Ring - Medium size */
     .progress-ring {
-        width: 240px;
-        height: 240px;
-    }
-
-    .progress-ring-circle-bg,
-    .progress-ring-circle {
-        r: 110;
-        cx: 120;
-        cy: 120;
+        width: 220px;
+        height: 220px;
     }
 
     .step-count {
@@ -1556,13 +1548,6 @@ body.dark .stat-label {
     .progress-ring {
         width: 280px;
         height: 280px;
-    }
-
-    .progress-ring-circle-bg,
-    .progress-ring-circle {
-        r: 130;
-        cx: 140;
-        cy: 140;
     }
 
     .progress-container {

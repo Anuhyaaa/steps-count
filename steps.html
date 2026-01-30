@@ -43,35 +43,58 @@
             <div class="progress-container">
                 <svg
                   class="progress-ring"
-                  width="180"
-                  height="180"
                   viewBox="0 0 200 200"
+                  width="280"
+                  height="280"
                 >
-                  <circle
-                    class="progress-ring-circle-bg"
-                    stroke="#e5d8c8"
-                    stroke-width="14"
-                    fill="transparent"
-                    r="86"
-                    cx="100"
-                    cy="100"
-                  />
-                  <circle
-                    class="progress-ring-circle"
-                    stroke="#c49a6c"
-                    stroke-width="14"
-                    fill="transparent"
-                    r="86"
-                    cx="100"
-                    cy="100"
-                  />
+                  <!-- Rotate ONLY the circles -->
+                  <g transform="rotate(-90 100 100)">
+                    <circle
+                      class="progress-ring-circle-bg"
+                      stroke="#e5d8c8"
+                      stroke-width="14"
+                      fill="transparent"
+                      r="86"
+                      cx="100"
+                      cy="100"
+                    />
+                    <circle
+                      class="progress-ring-circle"
+                      stroke="#c49a6c"
+                      stroke-width="14"
+                      fill="transparent"
+                      r="86"
+                      cx="100"
+                      cy="100"
+                    />
+                  </g>
+
+                  <!-- Centered number (NOT rotated) -->
+                  <text
+                    id="stepCount"
+                    x="100"
+                    y="95"
+                    text-anchor="middle"
+                    dominant-baseline="middle"
+                    font-size="36"
+                    font-weight="700"
+                    fill="#3b2a20"
+                  >
+                    0
+                  </text>
+
+                  <!-- Label -->
+                  <text
+                    x="100"
+                    y="125"
+                    text-anchor="middle"
+                    dominant-baseline="middle"
+                    font-size="14"
+                    fill="#c49a6c"
+                  >
+                    Steps
+                  </text>
                 </svg>
-                
-                <!-- Center Content -->
-                <div class="progress-content">
-                    <div class="step-count" id="stepCount">0</div>
-                    <div class="step-label">Steps</div>
-                </div>
             </div>
 
             <!-- Daily Goal Text -->
