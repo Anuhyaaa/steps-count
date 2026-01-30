@@ -75,17 +75,19 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
         }
 
-        .food-img-placeholder {
+        .food-img {
             width: 100%;
             height: 180px;
-            background-color: #e6dccc;
+            overflow: hidden;
             border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #5a3e2b;
-            font-size: 14px;
             margin-bottom: 1rem;
+        }
+
+        .food-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .food-name {
@@ -126,7 +128,7 @@
                 padding: 1.8rem;
             }
 
-            .food-img-placeholder {
+            .food-img {
                 height: 200px;
             }
 
@@ -162,7 +164,7 @@
                 padding: 2rem;
             }
 
-            .food-img-placeholder {
+            .food-img {
                 height: 220px;
             }
 
@@ -222,8 +224,8 @@
         <div class="food-grid">
             <!-- Food Card 1: Oats -->
             <div class="food-card">
-                <div class="food-img-placeholder">
-                    Image will be added later
+                <div class="food-img">
+                    <img src="images/oats.jpg" alt="Bowl of nutritious oats" loading="lazy">
                 </div>
                 <h3 class="food-name">Oats</h3>
                 <p class="food-benefit">Provides long-lasting energy.</p>
@@ -231,8 +233,8 @@
 
             <!-- Food Card 2: Eggs -->
             <div class="food-card">
-                <div class="food-img-placeholder">
-                    Image will be added later
+                <div class="food-img">
+                    <img src="images/eggs.jpg" alt="Fresh eggs for protein" loading="lazy">
                 </div>
                 <h3 class="food-name">Eggs</h3>
                 <p class="food-benefit">High-quality protein for muscle building.</p>
@@ -240,8 +242,8 @@
 
             <!-- Food Card 3: Banana -->
             <div class="food-card">
-                <div class="food-img-placeholder">
-                    Image will be added later
+                <div class="food-img">
+                    <img src="images/banana.jpg" alt="Yellow bananas rich in potassium" loading="lazy">
                 </div>
                 <h3 class="food-name">Banana</h3>
                 <p class="food-benefit">Quick energy and potassium source.</p>
@@ -249,8 +251,8 @@
 
             <!-- Food Card 4: Chicken Breast -->
             <div class="food-card">
-                <div class="food-img-placeholder">
-                    Image will be added later
+                <div class="food-img">
+                    <img src="images/chicken.jpg" alt="Grilled chicken breast" loading="lazy">
                 </div>
                 <h3 class="food-name">Chicken Breast</h3>
                 <p class="food-benefit">Lean protein for muscle recovery.</p>
@@ -258,8 +260,8 @@
 
             <!-- Food Card 5: Brown Rice -->
             <div class="food-card">
-                <div class="food-img-placeholder">
-                    Image will be added later
+                <div class="food-img">
+                    <img src="images/brown-rice.jpg" alt="Bowl of brown rice" loading="lazy">
                 </div>
                 <h3 class="food-name">Brown Rice</h3>
                 <p class="food-benefit">Healthy carbs for sustained energy.</p>
@@ -267,8 +269,8 @@
 
             <!-- Food Card 6: Almonds -->
             <div class="food-card">
-                <div class="food-img-placeholder">
-                    Image will be added later
+                <div class="food-img">
+                    <img src="images/almonds.jpg" alt="Almonds with healthy fats" loading="lazy">
                 </div>
                 <h3 class="food-name">Almonds</h3>
                 <p class="food-benefit">Healthy fats and vitamins.</p>
@@ -276,8 +278,8 @@
 
             <!-- Food Card 7: Greek Yogurt -->
             <div class="food-card">
-                <div class="food-img-placeholder">
-                    Image will be added later
+                <div class="food-img">
+                    <img src="images/greek-yogurt.jpg" alt="Greek yogurt in a bowl" loading="lazy">
                 </div>
                 <h3 class="food-name">Greek Yogurt</h3>
                 <p class="food-benefit">High protein and gut-friendly.</p>
@@ -285,8 +287,8 @@
 
             <!-- Food Card 8: Spinach -->
             <div class="food-card">
-                <div class="food-img-placeholder">
-                    Image will be added later
+                <div class="food-img">
+                    <img src="images/spinach.jpg" alt="Fresh green spinach leaves" loading="lazy">
                 </div>
                 <h3 class="food-name">Spinach</h3>
                 <p class="food-benefit">Rich in iron and antioxidants.</p>
@@ -294,8 +296,8 @@
 
             <!-- Food Card 9: Salmon -->
             <div class="food-card">
-                <div class="food-img-placeholder">
-                    Image will be added later
+                <div class="food-img">
+                    <img src="images/salmon.jpg" alt="Fresh salmon fillet" loading="lazy">
                 </div>
                 <h3 class="food-name">Salmon</h3>
                 <p class="food-benefit">Omega-3 for heart health.</p>
@@ -303,8 +305,8 @@
 
             <!-- Food Card 10: Avocado -->
             <div class="food-card">
-                <div class="food-img-placeholder">
-                    Image will be added later
+                <div class="food-img">
+                    <img src="images/avocado.jpg" alt="Sliced avocado" loading="lazy">
                 </div>
                 <h3 class="food-name">Avocado</h3>
                 <p class="food-benefit">Healthy fats for overall wellness.</p>
