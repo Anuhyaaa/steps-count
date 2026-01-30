@@ -110,19 +110,38 @@ body.dark .quote-container {
 
 body.dark .status-message {
     color: #c49a6c;
+    background-color: #2a2a2a;
 }
 
 body.dark .progress-bar {
     background-color: #2a2a2a;
 }
 
-body.dark .progress-fill {
+body.dark .progress-fill,
+body.dark .progress-bar-fill {
     background: linear-gradient(90deg, #c49a6c, #d4a876);
 }
 
 body.dark .chart-container,
 body.dark .stats-grid {
     background-color: #333333;
+}
+
+body.dark .weekly-item {
+    background-color: #2a2a2a;
+}
+
+body.dark .weekly-item.current-day {
+    background-color: #c49a6c;
+}
+
+body.dark .daily-goal-text,
+body.dark .calories-container {
+    background-color: #2a2a2a;
+}
+
+body.dark .progress-bar-container {
+    background-color: #2a2a2a;
 }
 
 /* Reset and Base Styles */
@@ -204,9 +223,13 @@ body {
     font-weight: 500;
     transition: color 0.3s ease, background-color 0.3s ease;
     padding: 0.5rem 0.6rem;
+    min-height: 32px; /* Touch-friendly minimum */
     border-radius: 6px;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .nav-links a:hover,
@@ -440,6 +463,7 @@ body {
 .btn {
     width: 100%;
     padding: 0.8rem 1.5rem;
+    min-height: 44px; /* Touch-friendly minimum */
     background-color: var(--accent-color);
     color: white;
     border: none;
@@ -453,6 +477,7 @@ body {
     display: block;
     text-decoration: none;
     text-align: center;
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
 }
 
 .btn:hover {
@@ -477,10 +502,48 @@ body {
     background-color: #6f5c44;
 }
 
+/* Primary and Secondary button aliases for consistency */
+.primary-btn {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    min-height: 44px;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.primary-btn:hover {
+    background-color: #b08758;
+}
+
+.secondary-btn {
+    background-color: #8b7355;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    min-height: 44px;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.secondary-btn:hover {
+    background-color: #6f5c44;
+}
+
 /* Reset Button - Mobile First */
 .reset-btn {
     width: 100%;
     padding: 0.8rem 1.5rem;
+    min-height: 44px; /* Touch-friendly minimum */
     background-color: var(--accent-color);
     color: white;
     border: none;
@@ -491,6 +554,7 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(196, 154, 108, 0.3);
+    -webkit-tap-highlight-color: transparent;
 }
 
 .reset-btn:hover {
@@ -516,9 +580,16 @@ body {
     margin-bottom: 0.5rem;
 }
 
-.form-input {
+.form-input,
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
     width: 100%;
     padding: 0.8rem 1rem;
+    min-height: 44px; /* Touch-friendly minimum */
     border: 2px solid #e0d5c7;
     border-radius: 10px;
     font-size: 0.95rem;
@@ -526,11 +597,16 @@ body {
     background-color: var(--card-bg);
     color: var(--text-dark);
     transition: border-color 0.3s ease;
+    box-sizing: border-box;
 }
 
-.form-input:focus {
+.form-input:focus,
+input:focus,
+select:focus,
+textarea:focus {
     outline: none;
     border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(196, 154, 108, 0.1);
 }
 
 /* Status Message */
@@ -761,25 +837,252 @@ body {
     border-left: 3px solid var(--accent-color);
 }
 
-/* Ensure images are responsive */
+/* ========== PERFORMANCE & IMAGE OPTIMIZATION ========== */
+
+/* Ensure all images are responsive and prevent layout shift */
 img {
     max-width: 100%;
     height: auto;
+    display: block;
 }
 
-/* Prevent horizontal overflow */
+/* Image containers for CLS prevention */
+.food-img,
+.about-image,
+.profile-avatar {
+    overflow: hidden;
+}
+
+/* Prevent horizontal overflow globally */
+* {
+    max-width: 100%;
+}
+
 .navbar,
 .container,
 .card,
 .dashboard-card {
-    max-width: 100%;
     box-sizing: border-box;
+}
+
+/* Optimize rendering performance */
+.dashboard-card,
+.card,
+.btn,
+.toggle-switch {
+    will-change: auto;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ========================================
+   ACCESSIBILITY IMPROVEMENTS
+   ======================================== */
+
+/* Focus styles for keyboard navigation */
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+.btn:focus,
+.nav-links a:focus {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* Skip to main content link for screen readers */
+.skip-to-main {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--accent-color);
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 100;
+}
+
+.skip-to-main:focus {
+    top: 0;
+}
+
+/* Improve text readability */
+p, li, span {
+    line-height: 1.6;
+}
+
+/* Ensure sufficient color contrast for links */
+a {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --shadow: rgba(0, 0, 0, 0.4);
+    }
+    
+    body.dark {
+        --shadow: rgba(0, 0, 0, 0.8);
+    }
+    
+    .btn,
+    .primary-btn,
+    .secondary-btn {
+        border: 2px solid currentColor;
+    }
+}
+
+/* ========================================
+   UTILITY CLASSES - Reduce Inline Styles
+   ======================================== */
+
+.text-center {
+    text-align: center;
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.mb-2 {
+    margin-bottom: 2rem;
+}
+
+.mt-1 {
+    margin-top: 1rem;
+}
+
+.mt-2 {
+    margin-top: 2rem;
+}
+
+.info-box {
+    background-color: #faf7f2;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+body.dark .info-box {
+    background-color: #2a2a2a;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.stat-label {
+    color: #8b7355;
+}
+
+body.dark .stat-label {
+    color: #d4a876;
+}
+
+.stat-value {
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.large-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.large-display {
+    font-size: 3rem;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.display-unit {
+    font-size: 1.2rem;
+    color: #8b7355;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.compact-card {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.hidden {
+    display: none;
 }
 
 /* ========================================
    MOBILE-FIRST MEDIA QUERIES
    Base: 320px-480px (already defined above)
    ======================================== */
+
+/* EXTRA SMALL MOBILE: max-width 360px - Fine-tune for very small screens */
+@media (max-width: 360px) {
+    body {
+        font-size: 14px;
+    }
+
+    .page-title {
+        font-size: 1.1rem;
+    }
+
+    .page-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .nav-brand {
+        font-size: 1rem;
+    }
+
+    .nav-links a {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.5rem;
+    }
+
+    .dashboard-card-icon {
+        font-size: 1.8rem;
+    }
+
+    .dashboard-card-value {
+        font-size: 1.6rem;
+    }
+
+    .step-count {
+        font-size: 2rem;
+    }
+
+    .progress-ring {
+        width: 180px;
+        height: 180px;
+    }
+
+    .progress-ring-circle-bg,
+    .progress-ring-circle {
+        r: 80;
+        cx: 90;
+        cy: 90;
+    }
+}
 
 /* TABLET: min-width 600px */
 @media (min-width: 600px) {
@@ -969,6 +1272,25 @@ img {
     /* Footer */
     .footer {
         font-size: 0.85rem;
+    }
+}
+
+/* MEDIUM TABLET: min-width 768px */
+@media (min-width: 768px) {
+    .container.dashboard {
+        max-width: 1000px;
+    }
+
+    .dashboard-grid {
+        gap: 1.5rem;
+    }
+
+    .page-title {
+        font-size: 1.6rem;
+    }
+
+    .card {
+        max-width: 550px;
     }
 }
 
@@ -1248,10 +1570,36 @@ img {
     .dashboard-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
     }
 
     .card {
         max-width: 500px;
+    }
+
+    .navbar {
+        padding: 0 3rem;
+    }
+
+    .page-header {
+        padding: 2rem 2rem;
+    }
+}
+
+/* EXTRA LARGE SCREENS: min-width 1920px - Prevent over-stretching */
+@media (min-width: 1920px) {
+    .container.dashboard {
+        max-width: 1600px;
+    }
+
+    .dashboard-grid {
+        max-width: 1500px;
+        gap: 2.5rem;
+    }
+
+    body {
+        font-size: 18px;
     }
 }
 
