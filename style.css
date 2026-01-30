@@ -1779,3 +1779,56 @@ body.dark .stat-label {
     }
 }
 
+@media (max-width: 480px) {
+
+  .footer {
+    position: static !important;
+    height: auto !important;
+    margin-top: 1.5rem;
+  }
+
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .container,
+  .container.dashboard {
+    min-height: auto !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .card {
+    max-width: 94% !important;
+    padding: 1rem !important;
+  }
+
+  .progress-container {
+    width: 100%;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    overflow: visible !important;
+  }
+
+  .progress-ring {
+    width: 160px !important;
+    height: 160px !important;
+  }
+
+  svg.progress-ring {
+    overflow: visible !important;
+  }
+
+  .progress-ring-circle-bg,
+  .progress-ring-circle {
+    r: 70 !important;
+    cx: 80 !important;
+    cy: 80 !important;
+  }
+
+  .btn,
+  .reset-btn {
+    padding: 0.65rem 1rem !important;
+    font-size: 0.9rem !important;
+  }
+}
