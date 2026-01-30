@@ -1,15 +1,17 @@
 // Configuration
 const DAILY_GOAL = 10000;
 const CALORIES_PER_STEP = 0.04;
-const STEP_THRESHOLD = 1.2;
-const STEP_DELAY = 250;
+const STEP_THRESHOLD = 12; // iOS-friendly threshold (11-13 range)
+const STEP_COOLDOWN = 400; // Minimum time between steps in ms
+const GRAVITY = 9.81; // Earth's gravity for reference
 
 // State variables
 let stepCount = 0;
 let lastStepTime = 0;
-let lastAcceleration = 0;
+let previousMagnitude = 0;
 let isTracking = false;
 let motionListener = null;
+let peakDetected = false;
 
 // DOM elements
 const stepCountElement = document.getElementById('stepCount');
@@ -155,30 +157,69 @@ function startStepDetection() {
     if (isTracking) return; // Prevent duplicate listeners
     
     isTracking = true;
-    motionListener = handleMotion.bind(this);
-    window.addEventListener('devicemotion', motionListener);
+    // Reset state when starting
+    previousMagnitude = 0;
+    peakDetected = false;
+    
+    // Add listener only once
+    window.addEventListener('devicemotion', handleMotion, false);
+    
+    console.log('Step detection started');
 }
 
-// Handle motion
+// Handle motion - Improved step detection for iPhone
 function handleMotion(event) {
-    if (!event.accelerationIncludingGravity) return;
+    // Check if acceleration data is available
+    if (!event.accelerationIncludingGravity) {
+        console.warn('No acceleration data available');
+        return;
+    }
     
     const { x, y, z } = event.accelerationIncludingGravity;
-    const acceleration = Math.sqrt(x * x + y * y + z * z);
+    
+    // Calculate magnitude of acceleration vector
+    const magnitude = Math.sqrt(x * x + y * y + z * z);
+    
+    // Get current time
     const currentTime = Date.now();
     const timeSinceLastStep = currentTime - lastStepTime;
     
-    if (acceleration > STEP_THRESHOLD && 
-        lastAcceleration < STEP_THRESHOLD && 
-        timeSinceLastStep > STEP_DELAY) {
+    // Step detection logic using peak detection
+    // A step is detected when:
+    // 1. Current magnitude crosses above threshold (peak detected)
+    // 2. Previous magnitude was below threshold (rising edge)
+    // 3. Enough time has passed since last step (cooldown)
+    
+    if (timeSinceLastStep >= STEP_COOLDOWN) {
+        // Detect peak: magnitude crosses above threshold
+        if (magnitude > STEP_THRESHOLD && previousMagnitude <= STEP_THRESHOLD) {
+            peakDetected = true;
+        }
         
-        stepCount++;
-        lastStepTime = currentTime;
-        updateDisplay();
-        saveStepsToStorage();
+        // Detect step: magnitude crosses back below threshold after peak
+        if (peakDetected && magnitude < STEP_THRESHOLD && previousMagnitude >= STEP_THRESHOLD) {
+            // Step detected!
+            stepCount++;
+            lastStepTime = currentTime;
+            peakDetected = false;
+            
+            // Update UI
+            updateDisplay();
+            saveStepsToStorage();
+            
+            console.log('Step detected! Total:', stepCount);
+        }
     }
     
-    lastAcceleration = acceleration;
+    // Store current magnitude for next iteration
+    previousMagnitude = magnitude;
+}
+
+// Reset step detection state
+function resetStepDetection() {
+    previousMagnitude = 0;
+    peakDetected = false;
+    lastStepTime = 0;
 }
 
 // Update display
@@ -202,8 +243,7 @@ function updateDisplay() {
 function resetSteps() {
     if (confirm('Are you sure you want to reset your step count?')) {
         stepCount = 0;
-        lastStepTime = 0;
-        lastAcceleration = 0;
+        resetStepDetection(); // Reset detection state
         updateDisplay();
         saveStepsToStorage();
         
@@ -212,7 +252,7 @@ function resetSteps() {
         statusMessage.style.borderLeftColor = '#2196f3';
         
         setTimeout(() => {
-            statusMessage.textContent = '✓ Step tracking active';
+            statusMessage.textContent = '✓ Motion sensor active';
             statusMessage.style.backgroundColor = '#e8f5e9';
             statusMessage.style.borderLeftColor = '#4caf50';
         }, 3000);
