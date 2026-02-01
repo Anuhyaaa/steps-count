@@ -2359,54 +2359,54 @@ body.dark .change-name-btn {
   }
 
   .name-modal-overlay {
-    padding: 12px !important;
+    padding: 8px !important;
     align-items: center !important;
     justify-content: center !important;
   }
 
   .name-modal-content {
     width: 100% !important;
-    max-width: 310px !important;
+    max-width: 280px !important;
     margin: 0 auto !important;
-    padding: 12px !important;
-    border-radius: 12px !important;
+    padding: 10px !important;
+    border-radius: 10px !important;
     transform: none !important;
     max-height: none !important;
   }
 
   .name-modal-title {
-    font-size: 0.95rem !important;
-    line-height: 1.2 !important;
-    margin-bottom: 6px !important;
+    font-size: 0.85rem !important;
+    line-height: 1.15 !important;
+    margin-bottom: 4px !important;
   }
 
   .name-modal-text {
-    font-size: 0.75rem !important;
-    line-height: 1.25 !important;
-    margin-bottom: 10px !important;
+    font-size: 0.7rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 8px !important;
   }
 
   .name-input {
-    height: 40px !important;
-    font-size: 0.85rem !important;
-    padding: 6px 10px !important;
+    height: 38px !important;
+    font-size: 0.8rem !important;
+    padding: 5px 8px !important;
     margin-bottom: 0 !important;
   }
 
   .name-save-btn {
-    height: 40px !important;
-    font-size: 0.85rem !important;
-    margin-top: 10px !important;
+    height: 38px !important;
+    font-size: 0.8rem !important;
+    margin-top: 8px !important;
   }
 
   .name-modal-note {
-    font-size: 0.65rem !important;
-    margin-top: 8px !important;
-    line-height: 1.2 !important;
+    font-size: 0.6rem !important;
+    margin-top: 6px !important;
+    line-height: 1.15 !important;
   }
 
   .name-modal-buttons button {
-    height: 40px !important;
-    font-size: 0.85rem !important;
+    height: 38px !important;
+    font-size: 0.8rem !important;
   }
 }
