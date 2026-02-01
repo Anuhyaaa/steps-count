@@ -107,6 +107,9 @@ function showNamePrompt() {
     // Add to document
     document.body.appendChild(modalOverlay);
     
+    // Add modal-open class to body
+    document.body.classList.add('modal-open');
+    
     // Focus on input
     const nameInput = document.getElementById('nameInput');
     setTimeout(() => nameInput.focus(), 100);
@@ -139,6 +142,9 @@ function handleNameSubmit() {
     
     // Save name
     if (saveUsername(name)) {
+        // Remove modal-open class from body
+        document.body.classList.remove('modal-open');
+        
         // Remove modal
         const modal = document.getElementById('namePromptModal');
         if (modal) {
@@ -219,6 +225,9 @@ function showEditNameModal() {
     // Add to document
     document.body.appendChild(modalOverlay);
     
+    // Add modal-open class to body
+    document.body.classList.add('modal-open');
+    
     // Focus on input and select text
     const editInput = document.getElementById('editNameInput');
     setTimeout(() => {
@@ -231,6 +240,8 @@ function showEditNameModal() {
     
     // Handle cancel button
     document.getElementById('cancelEditBtn').addEventListener('click', () => {
+        // Remove modal-open class from body
+        document.body.classList.remove('modal-open');
         closeEditModal();
     });
     
@@ -244,6 +255,8 @@ function showEditNameModal() {
     // Handle Escape key
     editInput.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
+            // Remove modal-open class from body
+            document.body.classList.remove('modal-open');
             closeEditModal();
         }
     });
@@ -266,6 +279,9 @@ function handleNameUpdate() {
     
     // Save updated name
     if (saveUsername(name)) {
+        // Remove modal-open class from body
+        document.body.classList.remove('modal-open');
+        
         closeEditModal();
         
         // Refresh all name displays

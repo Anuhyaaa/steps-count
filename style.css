@@ -2410,3 +2410,46 @@ body.dark .change-name-btn {
     font-size: 0.8rem !important;
   }
 }
+
+/* ================================
+   MOBILE RESPONSIVENESS FIX
+   Prevents page from rendering in narrow desktop-sized column
+   ================================ */
+@media (max-width: 768px) {
+
+  html, body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    position: relative;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body.modal-open {
+    overflow: hidden !important;
+    position: fixed;
+    width: 100%;
+  }
+
+  .name-modal-overlay {
+    position: fixed !important;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: none !important;
+    background-color: rgba(0,0,0,0.65);
+  }
+
+  .name-modal-content {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+    padding: 14px;
+    border-radius: 14px;
+    transform: none !important;
+  }
+}
