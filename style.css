@@ -2453,3 +2453,93 @@ body.dark .change-name-btn {
     transform: none !important;
   }
 }
+
+/* ===================================================
+   GLOBAL RESPONSIVE FIX - FULL DEVICE SUPPORT
+   =================================================== */
+
+/* Global responsive safety */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Prevent desktop width on mobile */
+body {
+  position: relative;
+}
+
+/* Fix Safari viewport bug */
+@supports (-webkit-touch-callout: none) {
+  body {
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Lock layout when modal is open */
+body.modal-open {
+  overflow: hidden !important;
+  position: fixed;
+  width: 100%;
+}
+
+/* ===== MODAL – TRUE MOBILE/TABLET FIX (CRITICAL) ===== */
+@media (max-width: 1024px) {
+
+  .name-modal-overlay {
+    position: fixed !important;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background-color: rgba(0,0,0,0.65);
+    backdrop-filter: none !important;
+    z-index: 9999;
+  }
+
+  .name-modal-content {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+    padding: 16px;
+    border-radius: 14px;
+    transform: none !important;
+  }
+}
+
+/* ===== MOBILE/TABLET LAYOUT NORMALIZATION ===== */
+@media (max-width: 1024px) {
+
+  .container,
+  .container.dashboard {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .card,
+  .step-counter-card,
+  .dashboard-card {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ===== DESKTOP/LAPTOP SAFETY ===== */
+@media (min-width: 1025px) {
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
