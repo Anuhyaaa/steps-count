@@ -151,6 +151,45 @@ body.dark .progress-bar-container {
     box-sizing: border-box;
 }
 
+/* ========================================
+   PERFORMANCE OPTIMIZATIONS
+   ======================================== */
+
+/* Lightweight page fade-in animation for smoother perceived navigation */
+@keyframes pageFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.page-fade-in {
+    animation: pageFadeIn 0.25s ease-out;
+    animation-fill-mode: both;
+}
+
+/* Optimize font rendering */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* Hardware acceleration for smooth transitions */
+.navbar,
+.nav-links a,
+.btn,
+.card,
+.dashboard-card {
+    will-change: auto;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
 /* MOBILE-FIRST BASE STYLES (320px - 480px) */
 body {
     font-family: 'Poppins', sans-serif;
@@ -1816,4 +1855,226 @@ body.dark .stat-label {
     padding: 0.65rem 1rem !important;
     font-size: 0.9rem !important;
   }
+}
+
+/* ========================================
+   USER NAME PERSONALIZATION STYLES
+   ======================================== */
+
+/* Navbar Greeting */
+.navbar-greeting {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-left: auto;
+    padding: 0.5rem 1rem;
+    background-color: rgba(196, 154, 108, 0.2);
+    border-radius: 20px;
+    white-space: nowrap;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-greeting:hover {
+    background-color: rgba(196, 154, 108, 0.3);
+}
+
+/* Name Modal Overlay */
+.name-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+/* Name Modal Content */
+.name-modal-content {
+    background-color: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    max-width: 450px;
+    width: 90%;
+    text-align: center;
+    animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.name-modal-title {
+    color: var(--text-dark);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+}
+
+.name-modal-text {
+    color: var(--text-dark);
+    font-size: 1rem;
+    margin-bottom: 1.8rem;
+    opacity: 0.8;
+}
+
+/* Name Input Field */
+.name-input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    border: 2px solid var(--accent-color);
+    border-radius: 12px;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+    background-color: var(--card-bg);
+    color: var(--text-dark);
+    text-align: center;
+}
+
+.name-input:focus {
+    border-color: #5a3e2b;
+    box-shadow: 0 0 0 3px rgba(196, 154, 108, 0.2);
+    transform: scale(1.02);
+}
+
+.name-input::placeholder {
+    color: rgba(59, 42, 32, 0.4);
+}
+
+/* Name Save Button */
+.name-save-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-light);
+    background: linear-gradient(135deg, var(--accent-color), #8b7355);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.name-save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(196, 154, 108, 0.4);
+}
+
+.name-save-btn:active {
+    transform: translateY(0);
+}
+
+/* Modal Note */
+.name-modal-note {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    opacity: 0.6;
+}
+
+/* Modal Buttons Container (for edit modal) */
+.name-modal-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.name-modal-buttons button {
+    flex: 1;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Cancel Button */
+.name-cancel-btn {
+    color: var(--text-dark);
+    background-color: rgba(196, 154, 108, 0.2);
+}
+
+.name-cancel-btn:hover {
+    background-color: rgba(196, 154, 108, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Change Name Button (Profile Page) */
+.change-name-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.7rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    background-color: rgba(196, 154, 108, 0.2);
+    border: 2px solid var(--accent-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.change-name-btn:hover {
+    background-color: var(--accent-color);
+    color: var(--text-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(196, 154, 108, 0.3);
+}
+
+/* Dark Mode Adjustments */
+body.dark .navbar-greeting {
+    background-color: rgba(196, 154, 108, 0.15);
+}
+
+body.dark .name-input::placeholder {
+    color: rgba(245, 245, 245, 0.4);
+}
+
+body.dark .change-name-btn {
+    color: #f5f5f5;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .navbar-greeting {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+        margin-left: 0.5rem;
+    }
+    
+    .name-modal-content {
+        padding: 2rem 1.5rem;
+        max-width: 90%;
+    }
+    
+    .name-modal-title {
+        font-size: 1.5rem;
+    }
+    
+    .name-modal-buttons {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
 }

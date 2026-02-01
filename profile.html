@@ -4,12 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FitTrack - Profile</title>
+    
+    <!-- Preconnect for faster font loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Optimized font loading -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Main stylesheet -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Prefetch frequently accessed pages -->
+    <link rel="prefetch" href="index.html" as="document">
+    <link rel="prefetch" href="steps.html" as="document">
+    <link rel="prefetch" href="settings.html" as="document">
 </head>
-<body>
+<body class="page-fade-in">
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
@@ -40,11 +51,16 @@
     <main class="container">
         <div class="card profile-container">
             <!-- Avatar -->
-            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Anuhya" alt="Profile Avatar" class="profile-avatar">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=User" alt="Profile Avatar" class="profile-avatar" id="profileAvatar">
             
             <!-- Profile Info -->
-            <h2 class="profile-name">Anuhya</h2>
+            <h2 class="profile-name" id="profileName">User</h2>
             <p class="profile-role">Fitness Enthusiast</p>
+            
+            <!-- Change Name Button -->
+            <button class="change-name-btn" id="changeNameBtn" onclick="showEditNameModal()">
+                ✏️ Change Name
+            </button>
 
             <!-- Weight Form -->
             <div class="form-group">
@@ -68,6 +84,7 @@
     </footer>
 
     <script src="theme.js"></script>
+    <script src="user-name.js"></script>
     <script src="profile.js"></script>
 </body>
 </html>

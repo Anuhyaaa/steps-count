@@ -4,6 +4,26 @@ const weightDisplay = document.getElementById('weightDisplay');
 const saveWeightBtn = document.getElementById('saveWeightBtn');
 const statusMessage = document.getElementById('statusMessage');
 
+// Load and display user profile
+function loadUserProfile() {
+    const username = localStorage.getItem('fittrack_username');
+    
+    if (username) {
+        // Update profile name
+        const profileName = document.getElementById('profileName');
+        if (profileName) {
+            profileName.textContent = username;
+        }
+        
+        // Update avatar with username seed
+        const profileAvatar = document.getElementById('profileAvatar');
+        if (profileAvatar) {
+            profileAvatar.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}`;
+            profileAvatar.alt = `${username}'s Avatar`;
+        }
+    }
+}
+
 // Load saved weight
 function loadWeight() {
     const savedWeight = localStorage.getItem('fitTrackWeight');
@@ -41,5 +61,6 @@ function saveWeight() {
 }
 
 // Initialize
+loadUserProfile();
 loadWeight();
 saveWeightBtn.addEventListener('click', saveWeight);

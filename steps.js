@@ -1,12 +1,14 @@
 // Configuration
 const DAILY_GOAL = 10000;
 const CALORIES_PER_STEP = 0.04;
+const STEP_LENGTH_KM = 0.00075; // Average step length in kilometers
 const STEP_THRESHOLD = 12; // iOS-friendly threshold (11-13 range)
 const STEP_COOLDOWN = 400; // Minimum time between steps in ms
 const GRAVITY = 9.81; // Earth's gravity for reference
 
 // State variables
 let stepCount = 0;
+let distanceKm = 0; // Distance in kilometers
 let lastStepTime = 0;
 let previousMagnitude = 0;
 let isTracking = false;
@@ -16,6 +18,7 @@ let peakDetected = false;
 // DOM elements
 const stepCountElement = document.getElementById('stepCount');
 const caloriesElement = document.getElementById('calories');
+const distanceElement = document.getElementById('distance');
 const resetBtn = document.getElementById('resetBtn');
 const startTrackingBtn = document.getElementById('startTrackingBtn');
 const statusMessage = document.getElementById('statusMessage');
@@ -70,6 +73,7 @@ function displayDate() {
 // Load steps
 function loadStepsFromStorage() {
     const savedSteps = localStorage.getItem('fitTrackSteps');
+    const savedDistance = localStorage.getItem('fitTrackDistance');
     const savedDate = localStorage.getItem('fitTrackDate');
     const today = new Date().toDateString();
     
@@ -78,10 +82,13 @@ function loadStepsFromStorage() {
             saveToWeeklyData(savedDate, parseInt(savedSteps, 10));
         }
         stepCount = 0;
+        distanceKm = 0;
         localStorage.setItem('fitTrackDate', today);
         localStorage.setItem('fitTrackSteps', '0');
+        localStorage.setItem('fitTrackDistance', '0');
     } else if (savedSteps) {
         stepCount = parseInt(savedSteps, 10);
+        distanceKm = savedDistance ? parseFloat(savedDistance) : stepCount * STEP_LENGTH_KM;
     }
     
     saveToWeeklyData(today, stepCount);
@@ -91,6 +98,7 @@ function loadStepsFromStorage() {
 function saveStepsToStorage() {
     const today = new Date().toDateString();
     localStorage.setItem('fitTrackSteps', stepCount.toString());
+    localStorage.setItem('fitTrackDistance', distanceKm.toFixed(2));
     localStorage.setItem('fitTrackDate', today);
     saveToWeeklyData(today, stepCount);
 }
@@ -200,6 +208,7 @@ function handleMotion(event) {
         if (peakDetected && magnitude < STEP_THRESHOLD && previousMagnitude >= STEP_THRESHOLD) {
             // Step detected!
             stepCount++;
+            distanceKm = stepCount * STEP_LENGTH_KM; // Calculate distance in real-time
             lastStepTime = currentTime;
             peakDetected = false;
             
@@ -207,7 +216,7 @@ function handleMotion(event) {
             updateDisplay();
             saveStepsToStorage();
             
-            console.log('Step detected! Total:', stepCount);
+            console.log('Step detected! Total:', stepCount, 'Distance:', distanceKm.toFixed(2), 'km');
         }
     }
     
@@ -224,14 +233,22 @@ function resetStepDetection() {
 
 // Update display
 function updateDisplay() {
+    // Update step count
     stepCountElement.textContent = stepCount.toLocaleString();
+    
+    // Update calories
     const calories = Math.round(stepCount * CALORIES_PER_STEP);
     caloriesElement.textContent = calories.toLocaleString();
     
+    // Update distance (rounded to 2 decimal places)
+    distanceElement.textContent = distanceKm.toFixed(2);
+    
+    // Update progress circle
     const progress = Math.min(stepCount / DAILY_GOAL, 1);
     const offset = circumference - (progress * circumference);
     progressCircle.style.strokeDashoffset = offset;
     
+    // Show achievement message
     if (stepCount >= DAILY_GOAL && stepCount - 1 < DAILY_GOAL) {
         statusMessage.textContent = '🎉 Daily goal achieved!';
         statusMessage.style.backgroundColor = '#fff9c4';
@@ -243,6 +260,7 @@ function updateDisplay() {
 function resetSteps() {
     if (confirm('Are you sure you want to reset your step count?')) {
         stepCount = 0;
+        distanceKm = 0; // Reset distance
         resetStepDetection(); // Reset detection state
         updateDisplay();
         saveStepsToStorage();

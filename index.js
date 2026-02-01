@@ -8,6 +8,16 @@ function displayDate() {
     }
 }
 
+// Update welcome message with user's name
+function updateWelcomeMessage() {
+    const username = localStorage.getItem('fittrack_username');
+    const welcomeElement = document.getElementById('welcomeMessage');
+    
+    if (welcomeElement && username) {
+        welcomeElement.textContent = `Welcome back, ${username} 👋`;
+    }
+}
+
 // Load dashboard data
 function loadDashboardData() {
     // Get today's steps
@@ -51,4 +61,5 @@ function calculateStreak() {
 
 // Initialize
 displayDate();
+updateWelcomeMessage();
 loadDashboardData();
