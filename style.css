@@ -1895,22 +1895,24 @@ body.dark .stat-label {
     backdrop-filter: blur(5px);
 }
 
-/* Name Modal Content */
+/* Name Modal Content - Mobile-First Design */
 .name-modal-content {
     background-color: var(--card-bg);
-    padding: 2.5rem;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    max-width: 450px;
-    width: 90%;
+    padding: 1.5rem 1.25rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    max-width: 90vw;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
     text-align: center;
-    animation: slideIn 0.4s ease-out;
+    animation: slideIn 0.3s ease-out;
 }
 
 @keyframes slideIn {
     from {
         opacity: 0;
-        transform: translateY(-30px);
+        transform: translateY(-20px);
     }
     to {
         opacity: 1;
@@ -1920,25 +1922,28 @@ body.dark .stat-label {
 
 .name-modal-title {
     color: var(--text-dark);
-    font-size: 1.8rem;
+    font-size: 1.2rem;
     font-weight: 600;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
 }
 
 .name-modal-text {
     color: var(--text-dark);
-    font-size: 1rem;
-    margin-bottom: 1.8rem;
+    font-size: 0.9rem;
+    margin-bottom: 1.2rem;
     opacity: 0.8;
+    line-height: 1.4;
 }
 
-/* Name Input Field */
+/* Name Input Field - Mobile Optimized */
 .name-input {
     width: 100%;
-    padding: 1rem;
-    font-size: 1.1rem;
-    border: 2px solid var(--accent-color);
-    border-radius: 12px;
+    padding: 0.7rem 0.85rem;
+    height: 44px;
+    font-size: 0.95rem;
+    border: 1.5px solid var(--accent-color);
+    border-radius: 10px;
     outline: none;
     font-family: 'Poppins', sans-serif;
     transition: all 0.3s ease;
@@ -1949,64 +1954,74 @@ body.dark .stat-label {
 
 .name-input:focus {
     border-color: #5a3e2b;
-    box-shadow: 0 0 0 3px rgba(196, 154, 108, 0.2);
-    transform: scale(1.02);
+    box-shadow: 0 0 0 2px rgba(196, 154, 108, 0.2);
+    transform: scale(1.01);
 }
 
 .name-input::placeholder {
     color: rgba(59, 42, 32, 0.4);
 }
 
-/* Name Save Button */
+/* Name Save Button - Mobile Optimized */
 .name-save-btn {
     width: 100%;
-    padding: 1rem 2rem;
-    margin-top: 1.5rem;
-    font-size: 1.1rem;
+    padding: 0;
+    height: 48px;
+    margin-top: 1rem;
+    font-size: 1rem;
     font-weight: 600;
     color: var(--text-light);
     background: linear-gradient(135deg, var(--accent-color), #8b7355);
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .name-save-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(196, 154, 108, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(196, 154, 108, 0.4);
 }
 
 .name-save-btn:active {
     transform: translateY(0);
 }
 
-/* Modal Note */
+/* Modal Note - Compact */
 .name-modal-note {
-    margin-top: 1.5rem;
-    font-size: 0.85rem;
+    margin-top: 1rem;
+    font-size: 0.8rem;
     color: var(--text-dark);
     opacity: 0.6;
+    line-height: 1.3;
 }
 
-/* Modal Buttons Container (for edit modal) */
+/* Modal Buttons Container (for edit modal) - Mobile Optimized */
 .name-modal-buttons {
     display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
 }
 
 .name-modal-buttons button {
     flex: 1;
-    padding: 1rem;
-    font-size: 1rem;
+    padding: 0;
+    height: 48px;
+    font-size: 0.95rem;
     font-weight: 600;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Cancel Button */
@@ -2056,25 +2071,121 @@ body.dark .change-name-btn {
     color: #f5f5f5;
 }
 
-/* Mobile Responsive */
+/* Tablet and Desktop - Enhanced Modal */
+@media (min-width: 481px) {
+    .name-modal-content {
+        padding: 2rem 1.75rem;
+        max-width: 420px;
+        border-radius: 18px;
+    }
+    
+    .name-modal-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.7rem;
+    }
+    
+    .name-modal-text {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .name-input {
+        padding: 0.85rem 1rem;
+        height: 50px;
+        font-size: 1.05rem;
+        border-radius: 12px;
+    }
+    
+    .name-save-btn {
+        height: 52px;
+        font-size: 1.05rem;
+        margin-top: 1.25rem;
+        border-radius: 12px;
+    }
+    
+    .name-modal-note {
+        margin-top: 1.25rem;
+        font-size: 0.85rem;
+    }
+    
+    .name-modal-buttons {
+        flex-direction: row;
+        gap: 1rem;
+        margin-top: 1.25rem;
+    }
+    
+    .name-modal-buttons button {
+        height: 52px;
+        font-size: 1rem;
+    }
+}
+
+/* Large Desktop - Maximum Comfort */
+@media (min-width: 769px) {
+    .name-modal-content {
+        padding: 2.5rem;
+        max-width: 450px;
+        border-radius: 20px;
+    }
+    
+    .name-modal-title {
+        font-size: 1.8rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .name-modal-text {
+        font-size: 1rem;
+        margin-bottom: 1.8rem;
+    }
+    
+    .name-input {
+        padding: 1rem;
+        height: 54px;
+        font-size: 1.1rem;
+        border: 2px solid var(--accent-color);
+        border-radius: 12px;
+    }
+    
+    .name-input:focus {
+        box-shadow: 0 0 0 3px rgba(196, 154, 108, 0.2);
+        transform: scale(1.02);
+    }
+    
+    .name-save-btn {
+        padding: 1rem 2rem;
+        height: auto;
+        font-size: 1.1rem;
+        margin-top: 1.5rem;
+        border-radius: 12px;
+    }
+    
+    .name-save-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(196, 154, 108, 0.4);
+    }
+    
+    .name-modal-note {
+        margin-top: 1.5rem;
+        font-size: 0.85rem;
+    }
+    
+    .name-modal-buttons {
+        margin-top: 1.5rem;
+    }
+    
+    .name-modal-buttons button {
+        padding: 1rem;
+        height: auto;
+        font-size: 1rem;
+        border-radius: 12px;
+    }
+}
+
+/* Mobile Navbar Greeting */
 @media (max-width: 768px) {
     .navbar-greeting {
         font-size: 0.85rem;
         padding: 0.4rem 0.8rem;
         margin-left: 0.5rem;
-    }
-    
-    .name-modal-content {
-        padding: 2rem 1.5rem;
-        max-width: 90%;
-    }
-    
-    .name-modal-title {
-        font-size: 1.5rem;
-    }
-    
-    .name-modal-buttons {
-        flex-direction: column;
-        gap: 0.8rem;
     }
 }
