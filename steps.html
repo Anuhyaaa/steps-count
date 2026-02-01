@@ -79,33 +79,13 @@
                       cy="100"
                     />
                   </g>
-
-                  <!-- Centered number (NOT rotated) -->
-                  <text
-                    id="stepCount"
-                    x="85"
-                    y="95"
-                    text-anchor="middle"
-                    dominant-baseline="middle"
-                    font-size="36"
-                    font-weight="700"
-                    fill="#3b2a20"
-                  >
-                    0
-                  </text>
-
-                  <!-- Label -->
-                  <text
-                    x="85"
-                    y="125"
-                    text-anchor="middle"
-                    dominant-baseline="middle"
-                    font-size="14"
-                    fill="#c49a6c"
-                  >
-                    Steps
-                  </text>
                 </svg>
+                
+                <!-- Centered step count using absolute positioning -->
+                <div class="step-count-text">
+                    <div class="step-number" id="stepNumber">0</div>
+                    <div class="step-label">Steps</div>
+                </div>
             </div>
 
             <!-- Daily Goal Text -->

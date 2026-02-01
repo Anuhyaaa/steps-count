@@ -2233,3 +2233,116 @@ body.dark .change-name-btn {
         margin-left: 0.5rem;
     }
 }
+
+/* ========================================================================
+   FINAL OVERRIDE: STEP COUNTER UI FIX
+   - Fixes centering of step count inside progress ring
+   - Locks SVG dimensions and geometry
+   - Mobile-first approach with single breakpoint
+   - Isolated scope: affects ONLY .step-counter-card
+   ======================================================================== */
+
+/* Lock SVG Progress Ring Geometry - Desktop First */
+.step-counter-card .progress-ring {
+    width: 280px !important;
+    height: 280px !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+.step-counter-card .progress-ring-circle-bg,
+.step-counter-card .progress-ring-circle {
+    r: 86 !important;
+    cx: 100 !important;
+    cy: 100 !important;
+}
+
+/* Center step count text using absolute positioning */
+.step-counter-card .progress-container {
+    position: relative !important;
+    width: 280px !important;
+    height: 280px !important;
+    margin: 0 auto 1.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.step-counter-card .step-count-text {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    pointer-events: none !important;
+}
+
+.step-counter-card .step-number {
+    font-size: 3rem !important;
+    font-weight: 700 !important;
+    color: var(--text-dark) !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.step-counter-card .step-label {
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    color: var(--accent-color) !important;
+    margin-top: 0.5rem !important;
+    line-height: 1 !important;
+}
+
+/* Lock card dimensions for desktop */
+.step-counter-card {
+    max-width: 400px !important;
+    margin: 0 auto !important;
+    padding: 2rem 1.5rem !important;
+}
+
+/* SINGLE MOBILE BREAKPOINT - Mobile-First Override */
+@media (max-width: 480px) {
+    /* Compact SVG for mobile */
+    .step-counter-card .progress-ring {
+        width: 160px !important;
+        height: 160px !important;
+    }
+
+    .step-counter-card .progress-ring-circle-bg,
+    .step-counter-card .progress-ring-circle {
+        r: 70 !important;
+        cx: 80 !important;
+        cy: 80 !important;
+    }
+
+    /* Adjust container for mobile */
+    .step-counter-card .progress-container {
+        width: 160px !important;
+        height: 160px !important;
+        margin: 0 auto 1rem !important;
+    }
+
+    /* Scale text for mobile */
+    .step-counter-card .step-number {
+        font-size: 2rem !important;
+    }
+
+    .step-counter-card .step-label {
+        font-size: 0.85rem !important;
+        margin-top: 0.3rem !important;
+    }
+
+    /* Compact card for mobile */
+    .step-counter-card {
+        max-width: 92vw !important;
+        padding: 16px !important;
+    }
+}
+
+/* ======================================================================== */

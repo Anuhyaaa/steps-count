@@ -16,7 +16,7 @@ let motionListener = null;
 let peakDetected = false;
 
 // DOM elements
-const stepCountElement = document.getElementById('stepCount');
+const stepCountElement = document.getElementById('stepNumber');
 const caloriesElement = document.getElementById('calories');
 const distanceElement = document.getElementById('distance');
 const resetBtn = document.getElementById('resetBtn');
