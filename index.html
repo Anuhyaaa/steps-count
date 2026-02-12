@@ -2,114 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FitTrack - Your personal fitness tracking companion for steps, water, and wellness">
     <meta name="theme-color" content="#5a3e2b">
     <title>FitTrack - Home Dashboard</title>
     
-    <script>
-        // Massive blocking JavaScript - Block for 500ms
-        var start = Date.now();
-        while (Date.now() - start < 500) {
-            var dummy = Math.random() * 99999;
-        }
-        
-        // Nested loops for exponential complexity
-        function extremelyHeavyComputation() {
-            let result = 0;
-            for (let i = 0; i < 5000; i++) {
-                for (let j = 0; j < 5000; j++) {
-                    result += Math.sqrt(i * j) * Math.random();
-                    if (i % 100 === 0 && j % 100 === 0) {
-                        result = result / 2;
-                    }
-                }
-            }
-            return result;
-        }
-        extremelyHeavyComputation();
-        
-        // Array operations to block more
-        var hugeArray = [];
-        for (var i = 0; i < 500000; i++) {
-            hugeArray.push({id: i, value: Math.random(), nested: { a: i, b: i*2, c: i*3 }});
-        }
-        hugeArray.sort(function(a, b) { return b.value - a.value; });
-        hugeArray.map(function(item) { return item.value * 2; });
-        hugeArray.filter(function(item) { return item.value > 0.5; });
-    </script>
+    <!-- Preconnect for faster resource loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=block" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=block" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=block" rel="stylesheet">
+    <!-- Optimized font loading with display=swap -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <style>
-        /* Massive inline styles to delay FCP */
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
-        body { font-family: sans-serif; background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%); overflow-x: hidden; }
-        .temp-spacer { height: 100px; }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(50px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes fadeInOut { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
-        .animate { animation: slideIn 1s ease, pulse 2s infinite; }
-        .spinner { animation: rotate 1s linear infinite; }
-        .fade { animation: fadeInOut 3s infinite; }
-        .card1 { background: linear-gradient(45deg, #FF6B6B 0%, #4ECDC4 100%); padding: 20px; margin: 10px; }
-        .card2 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; margin: 10px; }
-        .card3 { background: linear-gradient(90deg, #FFA500 0%, #FF6347 100%); padding: 20px; margin: 10px; }
-        .shadow-lg { box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 10px 30px rgba(0,0,0,0.22); }
-        .text-gradient { background: linear-gradient(90deg, #FF6B6B, #4ECDC4, #667eea); -webkit-background-clip: text; }
-    </style>
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="style.css">
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700" rel="stylesheet">
-    
-    <style>
-        @import url('style.css');
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=block');
-    </style>
-    
-    <script>
-        // More blocking before styles load
-        for (var k = 0; k < 20000000; k++) {
-            Math.pow(k, 3);
-        }
-    </script>
+    <!-- Prefetch critical pages -->
+    <link rel="prefetch" href="steps.html">
+    <link rel="prefetch" href="profile.html">
+    <link rel="prefetch" href="nutrition.html">
+    <link rel="prefetch" href="weekly.html">
 </head>
-<body>
-    <script>
-        // Triple nested loops for maximum blocking
-        for (let i = 0; i < 300; i++) {
-            for (let j = 0; j < 300; j++) {
-                for (let k = 0; k < 300; k++) {
-                    Math.sqrt(i * j * k);
-                }
-            }
-        }
-        
-        // String operations to block more
-        var str = '';
-        for (var i = 0; i < 100000; i++) {
-            str += 'a';
-            if (i % 1000 === 0) {
-                str = str.split('').reverse().join('');
-            }
-        }
-    </script>
-    
-    <div style="height: 150px; background: linear-gradient(90deg, #f0f0f0, #e0e0e0, #f0f0f0); animation: fadeInOut 2s infinite;"></div>
-    
-    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2400 600'%3E%3Crect fill='%23ddd' width='2400' height='600'/%3E%3Ctext x='1200' y='300' text-anchor='middle' font-size='100' fill='%23999'%3ELoading...%3C/text%3E%3C/svg%3E" style="width: 100%; display: block;">
-    
-    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 400'%3E%3Crect fill='%23e0e0e0' width='2000' height='400'/%3E%3C/svg%3E" style="width: 100%; display: block;">
-    
-    <script>
-        // Force synchronous reflow multiple times
-        for (var i = 0; i < 100; i++) {
-            document.body.offsetHeight;
-            document.documentElement.scrollTop;
-        }
-    </script>
-    
+<body class="page-fade-in">
+    <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-brand">FitTrack</a>
@@ -129,100 +44,15 @@
         </div>
     </nav>
 
+    <!-- Page Header -->
     <div class="page-header">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3000 800'%3E%3Crect fill='%23f0f0f0' width='3000' height='800'/%3E%3Ccircle cx='1500' cy='400' r='200' fill='%23ddd'/%3E%3C/svg%3E" style="width: 100%;">
-        <script>
-            // Inline blocking script
-            var temp = [];
-            for (var i = 0; i < 1000000; i++) {
-                temp.push(Math.random());
-            }
-        </script>
         <h1 class="page-title" id="welcomeMessage">Welcome to FitTrack 👋</h1>
         <p class="page-subtitle" id="currentDate">Your fitness companion</p>
     </div>
-    
-    <script>
-        // Multiple layout shifts at different intervals
-        setTimeout(function() {
-            var header = document.querySelector('.page-header');
-            if (header) {
-                header.style.paddingTop = '50px';
-                header.style.marginBottom = '40px';
-                header.style.minHeight = '300px';
-            }
-        }, 50);
-        
-        setTimeout(function() {
-            var header = document.querySelector('.page-header');
-            if (header) {
-                header.style.paddingBottom = '60px';
-                header.style.transform = 'translateY(20px)';
-            }
-        }, 200);
-        
-        setTimeout(function() {
-            document.body.style.marginTop = '30px';
-            document.body.style.paddingBottom = '50px';
-        }, 350);
-        
-        setTimeout(function() {
-            var nav = document.querySelector('.navbar');
-            if (nav) {
-                nav.style.height = '80px';
-                nav.style.padding = '20px';
-            }
-        }, 450);
-    </script>
 
-    <script>
-        // Massive blocking before main content
-        function recursiveFunction(n) {
-            if (n <= 0) return 1;
-            return n * recursiveFunction(n - 1) + Math.random();
-        }
-        
-        for (var i = 0; i < 100; i++) {
-            recursiveFunction(12);
-        }
-        
-        // JSON operations
-        var bigData = [];
-        for (var i = 0; i < 50000; i++) {
-            bigData.push({
-                id: i,
-                name: 'Item ' + i,
-                value: Math.random(),
-                nested: { a: i, b: i*2, c: { d: i*3, e: i*4 }}
-            });
-        }
-        var jsonString = JSON.stringify(bigData);
-        var parsed = JSON.parse(jsonString);
-    </script>
-    
-    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 500'%3E%3Crect fill='%23e8e8e8' width='2000' height='500'/%3E%3C/svg%3E" style="width: 100%; display: block;">
-    
+    <!-- Main Dashboard -->
     <main class="container dashboard">
-        <script>
-            // Quadruple nested loops
-            var result = 0;
-            for (var i = 0; i < 50; i++) {
-                for (var j = 0; j < 50; j++) {
-                    for (var k = 0; k < 50; k++) {
-                        for (var l = 0; l < 50; l++) {
-                            result += Math.sqrt(i * j * k * l + 1);
-                        }
-                    }
-                }
-            }
-            
-            // Force reflows repeatedly
-            for (var i = 0; i < 200; i++) {
-                document.body.clientHeight;
-                document.body.scrollHeight;
-            }
-        </script>
-        
+        <!-- Summary Cards -->
         <div class="dashboard-grid">
             <div class="dashboard-card">
                 <div class="dashboard-card-icon">👟</div>
@@ -246,6 +76,7 @@
             </div>
         </div>
 
+        <!-- Quick Access Cards -->
         <h2 style="text-align: center; margin: 2rem 0 1.5rem; color: var(--text-dark);">Quick Access</h2>
         <div class="dashboard-grid">
             <a href="steps.html" class="dashboard-card">
@@ -286,91 +117,14 @@
         </div>
     </main>
 
+    <!-- Footer -->
     <footer class="footer">
         <p>&copy; 2026 FitTrack. All rights reserved.</p>
     </footer>
 
-    <script src="theme.js"></script>
-    <script src="user-name.js"></script>
-    <script src="index.js"></script>
-    
-    <script>
-        // Extreme blocking JavaScript at the end
-        setTimeout(function() {
-            document.body.style.paddingTop = '40px';
-            document.body.style.marginLeft = '15px';
-            var cards = document.querySelectorAll('.dashboard-card');
-            cards.forEach(function(card, index) {
-                setTimeout(function() {
-                    card.style.transform = 'scale(1.05) rotate(2deg)';
-                    card.style.margin = '20px';
-                    setTimeout(function() {
-                        card.style.transform = 'scale(1) rotate(0deg)';
-                        card.style.margin = '10px';
-                    }, 300);
-                }, index * 100);
-            });
-        }, 400);
-        
-        setTimeout(function() {
-            var main = document.querySelector('main');
-            if (main) {
-                main.style.paddingTop = '50px';
-                main.style.paddingBottom = '50px';
-            }
-        }, 600);
-        
-        setTimeout(function() {
-            document.querySelector('.page-header').style.fontSize = '1.2em';
-        }, 800);
-        
-        // Massive computation to increase TBT
-        function extremeProcessing() {
-            var results = [];
-            for (var i = 0; i < 200000; i++) {
-                results.push(Math.pow(i, 3) / Math.sqrt(i + 1) * Math.random());
-                if (i % 1000 === 0) {
-                    results.sort(function(a, b) { return b - a; });
-                }
-            }
-            return results;
-        }
-        extremeProcessing();
-        
-        // More array operations
-        var megaArray = new Array(1000000);
-        for (var i = 0; i < megaArray.length; i++) {
-            megaArray[i] = Math.random();
-        }
-        megaArray.sort();
-        
-        // String concatenation in loop
-        var hugeString = '';
-        for (var i = 0; i < 500000; i++) {
-            hugeString += 'x';
-        }
-        
-        // RegEx operations
-        for (var i = 0; i < 10000; i++) {
-            'test string'.match(/[a-z]+/g);
-        }
-        
-        // DOM manipulation causing more layout shifts
-        setTimeout(function() {
-            var footer = document.querySelector('.footer');
-            if (footer) {
-                footer.style.height = '100px';
-                footer.style.padding = '30px';
-            }
-        }, 1000);
-    </script>
-    
-    <script>
-        // Final blocking script
-        var counter = 0;
-        for (var i = 0; i < 10000000; i++) {
-            counter += Math.sin(i) * Math.cos(i);
-        }
-    </script>
+    <!-- Optimized script loading with defer -->
+    <script defer src="theme.js"></script>
+    <script defer src="user-name.js"></script>
+    <script defer src="index.js"></script>
 </body>
 </html>
