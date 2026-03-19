@@ -5,14 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>FitTrack - Profile</title>
     
-    <!-- Preconnect for faster font loading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <!-- Optimized font loading -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Main stylesheet -->
     <link rel="stylesheet" href="style.css">
     
     <!-- Prefetch frequently accessed pages -->
@@ -51,7 +45,7 @@
     <main class="container">
         <div class="card profile-container">
             <!-- Avatar -->
-            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=User" alt="Profile Avatar" class="profile-avatar" id="profileAvatar">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=User" alt="Profile Avatar" class="profile-avatar" id="profileAvatar" loading="lazy" decoding="async">
             
             <!-- Profile Info -->
             <h2 class="profile-name" id="profileName">User</h2>
