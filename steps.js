@@ -1,35 +1,294 @@
-const DAILY_GOAL=10000;const CALORIES_PER_STEP=0.04;const STEP_LENGTH_KM=0.00075;const STEP_THRESHOLD=12;const STEP_COOLDOWN=400;const GRAVITY=9.81;function isLighthouse(){return/lighthouse|gtmetrix|pagespeed/i.test(navigator.userAgent)}
-let stepCount=0;let distanceKm=0;let lastStepTime=0;let previousMagnitude=0;let isTracking=!1;let motionListener=null;let peakDetected=!1;const stepCountElement=document.getElementById('stepNumber');const caloriesElement=document.getElementById('calories');const distanceElement=document.getElementById('distance');const resetBtn=document.getElementById('resetBtn');const startTrackingBtn=document.getElementById('startTrackingBtn');const statusMessage=document.getElementById('statusMessage');const progressCircle=document.querySelector('.progress-ring-circle');const dateDisplay=document.getElementById('dateDisplay');if(progressCircle){const radius=progressCircle.r.baseVal.value;const circumference=2*Math.PI*radius;progressCircle.style.strokeDasharray=`${circumference} ${circumference}`;progressCircle.style.strokeDashoffset=circumference}
-if(isLighthouse()){console.log('Lighthouse detected: Skipping motion tracking for FCP optimization');displayDate();loadStepsFromStorage();updateDisplay();if(statusMessage){statusMessage.textContent='📊 Step tracking available on real devices';statusMessage.style.backgroundColor='#e3f2fd';statusMessage.style.borderLeftColor='#2196f3'}
-return}
-displayDate();loadStepsFromStorage();updateDisplay();if(resetBtn){resetBtn.addEventListener('click',resetSteps)}
-if(startTrackingBtn){startTrackingBtn.addEventListener('click',handleStartTracking)}
-const wasTrackingActive=localStorage.getItem('fitTrackIsTracking')==='true';if(typeof DeviceMotionEvent==='undefined'){if(statusMessage){statusMessage.textContent='✗ Device motion not supported on this device';statusMessage.style.backgroundColor='#ffebee';statusMessage.style.borderLeftColor='#f44336'}
-return}
-if(needsPermission()){if(wasTrackingActive){if(startTrackingBtn){startTrackingBtn.style.display='block';startTrackingBtn.textContent='Resume Step Tracking'}
-if(statusMessage){statusMessage.textContent='📱 Tap to resume step tracking';statusMessage.style.backgroundColor='#fff9f0';statusMessage.style.borderLeftColor='#c49a6c'}}else{if(!dateDisplay)return;if(startTrackingBtn){startTrackingBtn.style.display='block'}
-if(statusMessage){statusMessage.textContent='📱 Tap "Start Step Tracking" to enable motion sensor';statusMessage.style.backgroundColor='#fff9f0';statusMessage.style.borderLeftColor='#c49a6c'}}}else{if(wasTrackingActive){startStepDetection();if(statusMessage){statusMessage.textContent='✓ Motion sensor active (resumed)';statusMessage.style.backgroundColor='#e8f5e9';statusMessage.style.borderLeftColor='#4caf50'}}else{startStepDetection();if(statusMessage){statusMessage.textContent='✓ Motion sensor active';statusMessage.style.backgroundColor='#e8f5e9';statusMessage.style.borderLeftColor='#4caf50'}
-statusMessage.textContent='✓ Motion sensor active';statusMessage.style.backgroundColor='#e8f5e9';statusMessage.style.borderLeftColor='#4caf50'}}}
-function displayDate(){const options={weekday:'long',year:'numeric',month:'long',day:'numeric'};dateDisplay.textContent=new Date().toLocaleDateString('en-US',options)}
-function loadStepsFromStorage(){const savedSteps=localStorage.getItem('fitTrackSteps');const savedDistance=localStorage.getItem('fitTrackDistance');const savedDate=localStorage.getItem('fitTrackDate');const today=new Date().toDateString();if(savedDate!==today){if(savedDate&&savedSteps){saveToWeeklyData(savedDate,parseInt(savedSteps,10))}
-stepCount=0;distanceKm=0;localStorage.setItem('fitTrackDate',today);localStorage.setItem('fitTrackSteps','0');localStorage.setItem('fitTrackDistance','0')}else if(savedSteps){stepCount=parseInt(savedSteps,10);distanceKm=savedDistance?parseFloat(savedDistance):stepCount*STEP_LENGTH_KM}
-saveToWeeklyData(today,stepCount)}
-function saveStepsToStorage(){const today=new Date().toDateString();localStorage.setItem('fitTrackSteps',stepCount.toString());localStorage.setItem('fitTrackDistance',distanceKm.toFixed(2));localStorage.setItem('fitTrackDate',today);saveToWeeklyData(today,stepCount)}
-function saveToWeeklyData(dateString,steps){let weeklyData=JSON.parse(localStorage.getItem('fitTrackWeekly')||'{}');weeklyData[dateString]=steps;const dates=Object.keys(weeklyData).sort((a,b)=>new Date(b)-new Date(a));if(dates.length>30){dates.slice(30).forEach(date=>delete weeklyData[date])}
-localStorage.setItem('fitTrackWeekly',JSON.stringify(weeklyData))}
-function needsPermission(){return typeof DeviceMotionEvent!=='undefined'&&typeof DeviceMotionEvent.requestPermission==='function'}
-async function requestMotionPermission(){try{const permission=await DeviceMotionEvent.requestPermission();if(permission==='granted'){startStepDetection();startTrackingBtn.style.display='none';statusMessage.textContent='✓ Motion sensor active';statusMessage.style.backgroundColor='#e8f5e9';statusMessage.style.borderLeftColor='#4caf50';localStorage.setItem('fitTrackIsTracking','true');return!0}else{statusMessage.textContent='✗ Motion permission denied. Please enable in Settings.';statusMessage.style.backgroundColor='#ffebee';statusMessage.style.borderLeftColor='#f44336';localStorage.setItem('fitTrackIsTracking','false');return!1}}catch(error){statusMessage.textContent='✗ Could not request permission: '+error.message;statusMessage.style.backgroundColor='#ffebee';statusMessage.style.borderLeftColor='#f44336';localStorage.setItem('fitTrackIsTracking','false');return!1}}
-async function handleStartTracking(){if(needsPermission()){await requestMotionPermission()}else{startStepDetection();startTrackingBtn.style.display='none';statusMessage.textContent='✓ Motion sensor active';statusMessage.style.backgroundColor='#e8f5e9';statusMessage.style.borderLeftColor='#4caf50'}}
-function startStepDetection(){if(isTracking)return;isTracking=!0;localStorage.setItem('fitTrackIsTracking','true');previousMagnitude=0;peakDetected=!1;window.addEventListener('devicemotion',handleMotion,!1);console.log('Step detection started')}
-function handleMotion(event){if(!event.accelerationIncludingGravity){console.warn('No acceleration data available');return}
-const{x,y,z}=event.accelerationIncludingGravity;const magnitude=Math.sqrt(x*x+y*y+z*z);const currentTime=Date.now();const timeSinceLastStep=currentTime-lastStepTime;if(timeSinceLastStep>=STEP_COOLDOWN){if(magnitude>STEP_THRESHOLD&&previousMagnitude<=STEP_THRESHOLD){peakDetected=!0}
-if(peakDetected&&magnitude<STEP_THRESHOLD&&previousMagnitude>=STEP_THRESHOLD){stepCount++;distanceKm=stepCount*STEP_LENGTH_KM;lastStepTime=currentTime;peakDetected=!1;updateDisplay();saveStepsToStorage();console.log('Step detected! Total:',stepCount,'Distance:',distanceKm.toFixed(2),'km')}}
-previousMagnitude=magnitude}
-function resetStepDetection(){previousMagnitude=0;peakDetected=!1;lastStepTime=0}
-function updateDisplay(){if(stepCountElement){stepCountElement.textContent=stepCount.toLocaleString()}
-const calories=Math.round(stepCount*CALORIES_PER_STEP);if(caloriesElement){caloriesElement.textContent=calories.toLocaleString()}
-if(distanceElement){distanceElement.textContent=distanceKm.toFixed(2)}
-if(progressCircle){const radius=progressCircle.r.baseVal.value;const circumference=2*Math.PI*radius;const progress=Math.min(stepCount/DAILY_GOAL,1);const offset=circumference-(progress*circumference);progressCircle.style.strokeDashoffset=offset}
-if(stepCount>=DAILY_GOAL&&stepCount-1<DAILY_GOAL&&statusMessage){statusMessage.textContent='🎉 Daily goal achieved!';statusMessage.style.backgroundColor='#fff9c4';statusMessage.style.borderLeftColor='#fbc02d'}}
-function resetSteps(){if(confirm('Are you sure you want to reset your step count?')){stepCount=0;distanceKm=0;resetStepDetection();updateDisplay();saveStepsToStorage();statusMessage.textContent='✓ Steps reset successfully';statusMessage.style.backgroundColor='#e3f2fd';statusMessage.style.borderLeftColor='#2196f3';setTimeout(()=>{statusMessage.textContent='✓ Motion sensor active';statusMessage.style.backgroundColor='#e8f5e9';statusMessage.style.borderLeftColor='#4caf50'},3000)}}
-if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init)}else{init()}
+const DAILY_GOAL = 10000;
+const CALORIES_PER_STEP = 0.04;
+const STEP_LENGTH_KM = 0.00075;
+const STEP_UPPER_THRESHOLD = 11.6;
+const STEP_LOWER_THRESHOLD = 10.2;
+const STEP_COOLDOWN = 350;
+
+let stepCount = 0;
+let distanceKm = 0;
+let lastStepTime = 0;
+let stepArmed = false;
+let isTracking = false;
+let motionListenerAttached = false;
+
+const stepCountElement = document.getElementById('stepNumber');
+const caloriesElement = document.getElementById('calories');
+const distanceElement = document.getElementById('distance');
+const resetBtn = document.getElementById('resetBtn');
+const startTrackingBtn = document.getElementById('startTrackingBtn');
+const statusMessage = document.getElementById('statusMessage');
+const progressCircle = document.querySelector('.progress-ring-circle');
+const dateDisplay = document.getElementById('dateDisplay');
+
+function setStatus(message) {
+	if (statusMessage) {
+		statusMessage.textContent = message;
+	}
+}
+
+function isIOSPermissionFlow() {
+	return typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function';
+}
+
+function setTrackingButtonVisibility(visible) {
+	if (!startTrackingBtn) {
+		return;
+	}
+
+	startTrackingBtn.style.display = visible ? 'block' : 'none';
+}
+
+function displayDate() {
+	if (!dateDisplay) {
+		return;
+	}
+
+	const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+	dateDisplay.textContent = new Date().toLocaleDateString('en-US', options);
+}
+
+function loadStepsFromStorage() {
+	const savedSteps = localStorage.getItem('fitTrackSteps');
+	const savedDistance = localStorage.getItem('fitTrackDistance');
+	const savedDate = localStorage.getItem('fitTrackDate');
+	const today = new Date().toDateString();
+
+	if (savedDate !== today) {
+		if (savedDate && savedSteps) {
+			saveToWeeklyData(savedDate, parseInt(savedSteps, 10));
+		}
+
+		stepCount = 0;
+		distanceKm = 0;
+		localStorage.setItem('fitTrackDate', today);
+		localStorage.setItem('fitTrackSteps', '0');
+		localStorage.setItem('fitTrackDistance', '0');
+		return;
+	}
+
+	if (savedSteps) {
+		stepCount = parseInt(savedSteps, 10) || 0;
+		const parsedDistance = savedDistance ? parseFloat(savedDistance) : Number.NaN;
+		distanceKm = Number.isFinite(parsedDistance) ? parsedDistance : stepCount * STEP_LENGTH_KM;
+	}
+
+	saveToWeeklyData(today, stepCount);
+}
+
+function saveStepsToStorage() {
+	const today = new Date().toDateString();
+	localStorage.setItem('fitTrackSteps', String(stepCount));
+	localStorage.setItem('fitTrackDistance', distanceKm.toFixed(2));
+	localStorage.setItem('fitTrackDate', today);
+	saveToWeeklyData(today, stepCount);
+}
+
+function saveToWeeklyData(dateString, steps) {
+	const weeklyData = JSON.parse(localStorage.getItem('fitTrackWeekly') || '{}');
+	weeklyData[dateString] = steps;
+
+	const dates = Object.keys(weeklyData).sort((a, b) => new Date(b) - new Date(a));
+	if (dates.length > 30) {
+		dates.slice(30).forEach((date) => delete weeklyData[date]);
+	}
+
+	localStorage.setItem('fitTrackWeekly', JSON.stringify(weeklyData));
+}
+
+function updateDisplay() {
+	if (stepCountElement) {
+		stepCountElement.textContent = stepCount.toLocaleString();
+	}
+
+	const calories = Math.round(stepCount * CALORIES_PER_STEP);
+	if (caloriesElement) {
+		caloriesElement.textContent = calories.toLocaleString();
+	}
+
+	if (distanceElement) {
+		distanceElement.textContent = distanceKm.toFixed(2);
+	}
+
+	if (progressCircle) {
+		const radius = progressCircle.r.baseVal.value;
+		const circumference = 2 * Math.PI * radius;
+		const progress = Math.min(stepCount / DAILY_GOAL, 1);
+		const offset = circumference - progress * circumference;
+		progressCircle.style.strokeDashoffset = offset;
+	}
+}
+
+function resetStepDetection() {
+	lastStepTime = 0;
+	stepArmed = false;
+}
+
+function registerStep(magnitude) {
+	stepCount += 1;
+	distanceKm = stepCount * STEP_LENGTH_KM;
+	lastStepTime = Date.now();
+	stepArmed = false;
+
+	console.log('Step detected:', {
+		stepCount,
+		distanceKm: Number(distanceKm.toFixed(3)),
+		magnitude: Number(magnitude.toFixed(2)),
+	});
+
+	updateDisplay();
+	saveStepsToStorage();
+
+	if (stepCount === DAILY_GOAL) {
+		setStatus('🎉 Daily goal achieved!');
+	}
+}
+
+function handleMotion(event) {
+	const acceleration = event.accelerationIncludingGravity;
+
+	if (!acceleration) {
+		console.warn('No accelerationIncludingGravity data available');
+		return;
+	}
+
+	const x = acceleration.x || 0;
+	const y = acceleration.y || 0;
+	const z = acceleration.z || 0;
+	const magnitude = Math.sqrt(x * x + y * y + z * z);
+	const currentTime = Date.now();
+	const timeSinceLastStep = currentTime - lastStepTime;
+
+	console.log('Motion values:', {
+		x: Number(x.toFixed(2)),
+		y: Number(y.toFixed(2)),
+		z: Number(z.toFixed(2)),
+		magnitude: Number(magnitude.toFixed(2)),
+		stepArmed,
+		timeSinceLastStep,
+	});
+
+	if (!stepArmed && magnitude >= STEP_UPPER_THRESHOLD) {
+		stepArmed = true;
+	}
+
+	if (stepArmed && magnitude <= STEP_LOWER_THRESHOLD && timeSinceLastStep >= STEP_COOLDOWN) {
+		registerStep(magnitude);
+	}
+
+	if (magnitude <= STEP_LOWER_THRESHOLD) {
+		stepArmed = false;
+	}
+}
+
+function startStepDetection() {
+	if (isTracking) {
+		return;
+	}
+
+	if (typeof DeviceMotionEvent === 'undefined') {
+		setStatus('Device motion not supported');
+		return;
+	}
+
+	if (!motionListenerAttached) {
+		window.addEventListener('devicemotion', handleMotion, { passive: true });
+		motionListenerAttached = true;
+	}
+
+	isTracking = true;
+	localStorage.setItem('fitTrackIsTracking', 'true');
+	resetStepDetection();
+	setTrackingButtonVisibility(false);
+	setStatus('Tracking active');
+	console.log('Step tracking started');
+}
+
+async function requestMotionPermission() {
+	if (!isIOSPermissionFlow()) {
+		startStepDetection();
+		return;
+	}
+
+	try {
+		const permission = await DeviceMotionEvent.requestPermission();
+
+		if (permission === 'granted') {
+			startStepDetection();
+			setStatus('Tracking active');
+			localStorage.setItem('fitTrackIsTracking', 'true');
+			return;
+		}
+
+		setStatus('Permission denied');
+		localStorage.setItem('fitTrackIsTracking', 'false');
+	} catch (error) {
+		console.error('Permission request error:', error);
+		setStatus('Permission denied');
+		localStorage.setItem('fitTrackIsTracking', 'false');
+	}
+}
+
+async function handleStartTracking() {
+	if (isTracking) {
+		return;
+	}
+
+	await requestMotionPermission();
+}
+
+function resetSteps() {
+	if (!confirm('Are you sure you want to reset your step count?')) {
+		return;
+	}
+
+	stepCount = 0;
+	distanceKm = 0;
+	resetStepDetection();
+	updateDisplay();
+	saveStepsToStorage();
+
+	if (isTracking) {
+		setStatus('Tracking active');
+	} else if (isIOSPermissionFlow()) {
+		setStatus('Tap Start Step Tracking to begin.');
+	} else {
+		setStatus('Tracking active');
+	}
+}
+
+function init() {
+	setStatus('Initializing...');
+	displayDate();
+	loadStepsFromStorage();
+	updateDisplay();
+
+	if (resetBtn) {
+		resetBtn.addEventListener('click', resetSteps);
+	}
+
+	if (startTrackingBtn) {
+		startTrackingBtn.addEventListener('click', handleStartTracking);
+	}
+
+	if (typeof DeviceMotionEvent === 'undefined') {
+		setTrackingButtonVisibility(false);
+		setStatus('Device motion is not supported on this device.');
+		return;
+	}
+
+	if (isIOSPermissionFlow()) {
+		setTrackingButtonVisibility(true);
+		setStatus('Tap to start tracking');
+		return;
+	}
+
+	setTrackingButtonVisibility(false);
+	startStepDetection();
+}
+
+if (document.readyState === 'loading') {
+	document.addEventListener('DOMContentLoaded', init);
+} else {
+	init();
+}

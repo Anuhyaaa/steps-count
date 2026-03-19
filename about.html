@@ -9,6 +9,110 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="prefetch" href="index.html" as="document">
+    <style>
+        .about-page {
+            padding-top: 1.5rem;
+        }
+
+        .about-layout {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 0 1rem;
+            text-align: left;
+        }
+
+        .about-image {
+            width: 100%;
+            max-width: 520px;
+            margin: 0 0 1.5rem;
+            border-radius: 18px;
+            box-shadow: 0 10px 28px rgb(90 62 43 / 0.12);
+            object-fit: cover;
+        }
+
+        .about-section {
+            margin-bottom: 1.75rem;
+        }
+
+        .about-kicker {
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            margin-bottom: 0.6rem;
+        }
+
+        .about-heading {
+            font-size: 1.7rem;
+            line-height: 1.2;
+            color: var(--text-dark);
+            margin-bottom: 0.8rem;
+        }
+
+        .about-heading-sm {
+            font-size: 1.25rem;
+        }
+
+        .about-copy {
+            font-size: 1.02rem;
+            line-height: 1.8;
+            color: rgb(59 42 32 / 0.82);
+            max-width: 760px;
+        }
+
+        .about-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 0.8rem;
+            max-width: 640px;
+        }
+
+        .about-list li {
+            position: relative;
+            padding-left: 1.1rem;
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: rgb(59 42 32 / 0.82);
+        }
+
+        .about-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 480px) {
+            .about-layout {
+                padding: 0;
+            }
+
+            .about-image {
+                max-width: 100%;
+                border-radius: 14px;
+            }
+
+            .about-heading {
+                font-size: 1.45rem;
+            }
+
+            .about-heading-sm {
+                font-size: 1.15rem;
+            }
+
+            .about-copy,
+            .about-list li {
+                font-size: 0.96rem;
+                line-height: 1.75;
+            }
+        }
+    </style>
 </head>
 <body class="page-fade-in">
     <!-- Navigation Bar -->
@@ -34,36 +138,38 @@
     <!-- Page Header -->
     <div class="page-header">
         <h1 class="page-title">About FitTrack</h1>
-        <p class="page-subtitle">Your personal fitness companion</p>
+        <p class="page-subtitle">A small app I built to make daily movement feel easier</p>
     </div>
 
     <!-- Main Content -->
-    <main class="container">
-        <div class="card" style="max-width: 700px; margin: 2rem auto; padding: 2rem;">
-            <!-- Fitness Illustration -->
-            <img src="images/about-fitness.webp" alt="Fitness tracking illustration" class="about-image" loading="lazy" style="max-width: 400px; margin: 0 auto 1.5rem;">
+    <main class="container about-page">
+        <article class="about-layout">
+            <img src="images/about-fitness.webp" alt="Fitness tracking illustration" class="about-image" loading="lazy">
 
-            <!-- About Content -->
-            <div class="about-content">
-                <p style="font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.7; text-align: center;">
-                    FitTrack is a simple fitness companion designed to help you stay active and build healthy daily habits. 
-                    Track your steps, monitor progress, manage water intake, and stay motivated — all in one place.
+            <section class="about-section">
+                <p class="about-kicker">About FitTrack</p>
+                <h2 class="about-heading">Built to feel simple, not demanding</h2>
+                <p class="about-copy">
+                    I built FitTrack to make staying active feel simple and stress-free. It started as a small project for tracking steps, but it slowly became a place for the everyday habits I actually want to keep up with.
                 </p>
+            </section>
 
-                <h3 style="color: var(--accent-color); margin: 2rem 0 1rem; font-size: 1.1rem;">How it works:</h3>
-                <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.9;">
-                    <li>Open FitTrack on your mobile browser</li>
-                    <li>Allow permissions</li>
-                    <li>Start walking</li>
+            <section class="about-section">
+                <h3 class="about-heading about-heading-sm">Why I built this</h3>
+                <p class="about-copy">
+                    Most fitness apps try to do too much. I wanted something lighter, friendlier, and easier to come back to when life gets busy. FitTrack is meant to help you notice the small wins without making the whole thing feel like a chore.
+                </p>
+            </section>
+
+            <section class="about-section">
+                <h3 class="about-heading about-heading-sm">How to use it</h3>
+                <ul class="about-list">
+                    <li>Open FitTrack on your phone</li>
+                    <li>Allow motion permissions when asked</li>
+                    <li>Start walking and let it do the rest</li>
                 </ul>
-
-                <div style="text-align: center; margin-top: 2rem; padding: 1rem; background-color: #faf7f2; border-radius: 10px;">
-                    <p style="font-size: 0.95rem; color: var(--text-dark); margin: 0;">
-                        No sign-up required. Works directly in your browser.
-                    </p>
-                </div>
-            </div>
-        </div>
+            </section>
+        </article>
     </main>
 
     <!-- Footer -->
@@ -71,7 +177,7 @@
         <p>&copy; 2026 FitTrack. All rights reserved.</p>
     </footer>
 
-    <script src defer="theme.js"></script>
-    <script src defer="user-name.js"></script>
+    <script src="theme.js" defer></script>
+    <script src="user-name.js" defer></script>
 </body>
 </html>

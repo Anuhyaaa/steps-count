@@ -1,6 +1,4 @@
-// Service Worker for Steps Count
-// Cache name - update version when you need to refresh cache
-const CACHE_NAME = 'steps-count-cache-v1';
+const CACHE_NAME = 'steps-count-cache-v2';
 
 // Files to cache
 const urlsToCache = [
@@ -64,7 +62,7 @@ self.addEventListener('activate', (event) => {
       .then((cacheNames) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
-            // Delete old caches that don't match current version
+
             if (cacheName !== CACHE_NAME) {
               console.log('Service Worker: Deleting old cache:', cacheName);
               return caches.delete(cacheName);
@@ -80,30 +78,27 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch event - serve from cache, fallback to network
+
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
-        // Cache hit - return cached response
+
         if (response) {
           console.log('Service Worker: Serving from cache:', event.request.url);
           return response;
         }
-        
-        // Cache miss - fetch from network
+
         console.log('Service Worker: Fetching from network:', event.request.url);
         return fetch(event.request)
           .then((response) => {
-            // Check if we received a valid response
+
             if (!response || response.status !== 200 || response.type !== 'basic') {
               return response;
             }
             
-            // Clone the response (can only be consumed once)
             const responseToCache = response.clone();
             
-            // Cache the fetched response for future use
             caches.open(CACHE_NAME)
               .then((cache) => {
                 cache.put(event.request, responseToCache);
@@ -114,7 +109,6 @@ self.addEventListener('fetch', (event) => {
       })
       .catch((error) => {
         console.error('Service Worker: Fetch failed', error);
-        // You can return a custom offline page here if needed
       })
   );
 });
