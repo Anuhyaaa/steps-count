@@ -9,110 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="prefetch" href="index.html" as="document">
-    <style>
-        .about-page {
-            padding-top: 1.5rem;
-        }
-
-        .about-layout {
-            max-width: 860px;
-            margin: 0 auto;
-            padding: 0 0 1rem;
-            text-align: left;
-        }
-
-        .about-image {
-            width: 100%;
-            max-width: 520px;
-            margin: 0 0 1.5rem;
-            border-radius: 18px;
-            box-shadow: 0 10px 28px rgb(90 62 43 / 0.12);
-            object-fit: cover;
-        }
-
-        .about-section {
-            margin-bottom: 1.75rem;
-        }
-
-        .about-kicker {
-            font-size: 0.82rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--accent-color);
-            margin-bottom: 0.6rem;
-        }
-
-        .about-heading {
-            font-size: 1.7rem;
-            line-height: 1.2;
-            color: var(--text-dark);
-            margin-bottom: 0.8rem;
-        }
-
-        .about-heading-sm {
-            font-size: 1.25rem;
-        }
-
-        .about-copy {
-            font-size: 1.02rem;
-            line-height: 1.8;
-            color: rgb(59 42 32 / 0.82);
-            max-width: 760px;
-        }
-
-        .about-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: grid;
-            gap: 0.8rem;
-            max-width: 640px;
-        }
-
-        .about-list li {
-            position: relative;
-            padding-left: 1.1rem;
-            font-size: 1.02rem;
-            line-height: 1.7;
-            color: rgb(59 42 32 / 0.82);
-        }
-
-        .about-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            top: 0;
-            color: var(--accent-color);
-            font-size: 1.2rem;
-            line-height: 1.4;
-        }
-
-        @media (max-width: 480px) {
-            .about-layout {
-                padding: 0;
-            }
-
-            .about-image {
-                max-width: 100%;
-                border-radius: 14px;
-            }
-
-            .about-heading {
-                font-size: 1.45rem;
-            }
-
-            .about-heading-sm {
-                font-size: 1.15rem;
-            }
-
-            .about-copy,
-            .about-list li {
-                font-size: 0.96rem;
-                line-height: 1.75;
-            }
-        }
-    </style>
 </head>
 <body class="page-fade-in">
     <!-- Navigation Bar -->
@@ -143,7 +39,7 @@
 
     <!-- Main Content -->
     <main class="container about-page">
-        <article class="about-layout">
+        <article class="about-card">
             <img src="images/about-fitness.webp" alt="Fitness tracking illustration" class="about-image" loading="lazy">
 
             <section class="about-section">

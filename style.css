@@ -178,7 +178,7 @@ button {
 .card {
   background-color: var(--card-bg);
   border-radius: 16px;
-  padding: 12rem;
+  padding: 2rem;
   box-shadow: 0 4px 15px var(--shadow);
   margin-bottom: 2rem;
   animation: fadeIn 0.3s ease;
@@ -232,6 +232,87 @@ button {
   max-width: 500px;
   margin: 0 auto;
   text-align: center;
+}
+
+/* About Page */
+.about-card {
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 15px var(--shadow);
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.about-card .about-image {
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgb(90 62 43 / 0.12);
+}
+
+.about-card .about-section {
+  margin-bottom: 1.5rem;
+}
+
+.about-card .about-section:last-child {
+  margin-bottom: 0;
+}
+
+.about-card .about-kicker {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+}
+
+.about-card .about-heading {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.about-card .about-heading-sm {
+  font-size: 1.1rem;
+}
+
+.about-card .about-copy {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: rgb(59 42 32 / 0.82);
+  margin-bottom: 0;
+}
+
+.about-card .about-list {
+  list-style: none;
+  padding-left: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
+.about-card .about-list li {
+  position: relative;
+  padding-left: 0.9rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+  color: rgb(59 42 32 / 0.82);
+}
+
+.about-card .about-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent-color);
+}
+
+.about-card .about-list li:last-child {
+  margin-bottom: 0;
 }
 .progress-container {
   position: relative;
