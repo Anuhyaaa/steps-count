@@ -9,13 +9,13 @@
     
     <link rel="stylesheet" href="style.css">
     
-    <!-- Prefetch frequently accessed pages -->
+    
     <link rel="prefetch" href="index.html" as="document">
     <link rel="prefetch" href="weekly.html" as="document">
     <link rel="prefetch" href="profile.html" as="document">
 </head>
 <body class="page-fade-in">
-    <!-- Navigation Bar -->
+    
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-brand">FitTrack</a>
@@ -35,16 +35,16 @@
         </div>
     </nav>
 
-    <!-- Page Header -->
+    
     <div class="page-header">
         <h1 class="page-title">Step Counter</h1>
         <p class="page-subtitle" id="dateDisplay"></p>
     </div>
 
-    <!-- Main Content -->
+    
     <main class="container">
         <div class="card step-counter-card">
-            <!-- Circular Progress Ring -->
+            
             <div class="progress-container">
                 <svg
                   class="progress-ring"
@@ -52,7 +52,7 @@
                   width="280"
                   height="280"
                 >
-                  <!-- Rotate ONLY the circles -->
+                  
                   <g transform="rotate(-90 100 100)">
                     <circle
                       class="progress-ring-circle-bg"
@@ -75,17 +75,17 @@
                   </g>
                 </svg>
                 
-                <!-- Centered step count using absolute positioning -->
+                
                 <div class="step-count-text">
                     <div class="step-number" id="stepNumber">0</div>
                     <div class="step-label">Steps</div>
                 </div>
             </div>
 
-            <!-- Daily Goal Text -->
+            
             <div class="daily-goal-text">Daily Goal: 10,000 steps</div>
 
-            <!-- Calories Display -->
+            
             <div class="calories-container">
                 <div class="calories-icon">🔥</div>
                 <div class="calories-text">
@@ -93,7 +93,7 @@
                 </div>
             </div>
 
-            <!-- Distance Display -->
+            
             <div class="calories-container" style="margin-top: 1rem;">
                 <div class="calories-icon">📍</div>
                 <div class="calories-text">
@@ -101,20 +101,20 @@
                 </div>
             </div>
 
-            <!-- Start Tracking Button (for iPhone) -->
+            
             <button class="btn" id="startTrackingBtn" style="display: none;">Start Step Tracking</button>
 
-            <!-- Reset Button -->
+            
             <button class="reset-btn" id="resetBtn">Reset Steps</button>
 
-            <!-- Status Message -->
+            
             <div class="status-message" id="statusMessage">
                 Loading step tracker...
             </div>
         </div>
     </main>
 
-    <!-- Footer -->
+    
     <footer class="footer">
         <p>&copy; 2026 FitTrack. All rights reserved.</p>
     </footer>

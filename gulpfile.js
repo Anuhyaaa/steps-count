@@ -14,7 +14,7 @@ const paths = {
     html: ['*.html'],
     css: ['style.css'],
     js: ['*.js', '!gulpfile.js'],
-    images: ['images/**/*'],
+    images: ['images*'],
     root: [
       'about.html',
       'app.html',

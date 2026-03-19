@@ -9,13 +9,13 @@
     
     <link rel="stylesheet" href="style.css">
     
-    <!-- Prefetch frequently accessed pages -->
+    
     <link rel="prefetch" href="index.html" as="document">
     <link rel="prefetch" href="steps.html" as="document">
     <link rel="prefetch" href="settings.html" as="document">
 </head>
 <body class="page-fade-in">
-    <!-- Navigation Bar -->
+    
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-brand">FitTrack</a>
@@ -35,28 +35,28 @@
         </div>
     </nav>
 
-    <!-- Page Header -->
+    
     <div class="page-header">
         <h1 class="page-title">User Profile</h1>
         <p class="page-subtitle">Manage your fitness profile</p>
     </div>
 
-    <!-- Main Content -->
+    
     <main class="container">
         <div class="card profile-container">
-            <!-- Avatar -->
+            
             <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=User" alt="Profile Avatar" class="profile-avatar" id="profileAvatar" loading="lazy" decoding="async">
             
-            <!-- Profile Info -->
+            
             <h2 class="profile-name" id="profileName">User</h2>
             <p class="profile-role">Fitness Enthusiast</p>
             
-            <!-- Change Name Button -->
+            
             <button class="change-name-btn" id="changeNameBtn" onclick="showEditNameModal()">
                 ✏️ Change Name
             </button>
 
-            <!-- Weight Form -->
+            
             <div class="form-group">
                 <label for="weightInput" class="form-label">Weight (kg)</label>
                 <input type="number" id="weightInput" class="form-input" placeholder="Enter your weight" min="1" max="500">
@@ -72,7 +72,7 @@
         </div>
     </main>
 
-    <!-- Footer -->
+    
     <footer class="footer">
         <p>&copy; 2026 FitTrack. All rights reserved.</p>
     </footer>

@@ -1,6 +1,4 @@
 const CACHE_NAME = 'steps-count-cache-v2';
-
-// Files to cache
 const urlsToCache = [
   '/',
   '/index.html',
@@ -30,12 +28,8 @@ const urlsToCache = [
   '/nutrition.html',
   '/app.html'
 ];
-
-// Install event - cache files
 self.addEventListener('install', (event) => {
   console.log('Service Worker: Installing...');
-  
-  // Perform install steps
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
@@ -44,7 +38,6 @@ self.addEventListener('install', (event) => {
       })
       .then(() => {
         console.log('Service Worker: Installed successfully');
-        // Force the waiting service worker to become the active service worker
         return self.skipWaiting();
       })
       .catch((error) => {
@@ -52,8 +45,6 @@ self.addEventListener('install', (event) => {
       })
   );
 });
-
-// Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
   console.log('Service Worker: Activating...');
   
@@ -72,7 +63,6 @@ self.addEventListener('activate', (event) => {
       })
       .then(() => {
         console.log('Service Worker: Activated successfully');
-        // Take control of all pages immediately
         return self.clients.claim();
       })
   );

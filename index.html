@@ -125,9 +125,8 @@ gtag('config', 'G-5Z5KQL3CRE');
     <script defer src="user-name.js"></script>
     <script defer src="index.js"></script>
     
-    <!-- Service Worker Registration -->
+    
     <script>
-        // Register the service worker for offline support
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/service-worker.js')
