@@ -7,6 +7,9 @@
   --text-light: #f5efe6;
   --shadow: rgba(90, 62, 43, 0.1);
   --transition-speed: 0.2s;
+  --motion-fast: 180ms;
+  --motion-medium: 320ms;
+  --motion-slow: 560ms;
 }
 * {
   margin: 0;
@@ -68,6 +71,92 @@ button {
     transform: translateY(0);
   }
 }
+/* Shared animation keyframes for gentle UI motion. */
+@keyframes liftIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes stepPulse {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.035);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes goalPulse {
+  0%,
+  100% {
+    box-shadow: 0 4px 15px var(--shadow);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgb(196 154 108 / 0.12);
+  }
+}
+@keyframes quoteFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+}
+@keyframes quoteFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes togglePop {
+  0% {
+    transform: translateX(0) scale(1);
+  }
+  55% {
+    transform: translateX(0) scale(1.08);
+  }
+  100% {
+    transform: translateX(0) scale(1);
+  }
+}
+@keyframes statusLift {
+  from {
+    opacity: 0.82;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .navbar {
   position: fixed;
   top: 0;
@@ -109,18 +198,58 @@ button {
   gap: 0.5rem;
 }
 .nav-links a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: var(--text-light);
   font-size: 0.9rem;
   font-weight: 500;
   padding: 0.6rem 1rem;
   border-radius: 8px;
   white-space: nowrap;
-  transition: background-color var(--transition-speed);
+  transition:
+    background-color var(--transition-speed),
+    transform var(--transition-speed),
+    color var(--transition-speed);
   -webkit-tap-highlight-color: #fff0;
 }
 .nav-links a:hover,
 .nav-links a.active {
   background-color: rgb(196 154 108 / 0.2);
+}
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0.95rem;
+  right: 0.95rem;
+  bottom: 0.35rem;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.75;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--transition-speed) ease;
+}
+.nav-links a:hover::after,
+.nav-links a.active::after,
+.nav-links a:focus-visible::after {
+  transform: scaleX(1);
+}
+.nav-links a:hover {
+  transform: translateY(-1px);
+}
+.nav-links a:focus-visible,
+.btn:focus-visible,
+.primary-btn:focus-visible,
+.reset-btn:focus-visible,
+.change-name-btn:focus-visible,
+.toggle-switch:focus-visible,
+button[type="button"]:focus-visible,
+button[type="submit"]:focus-visible {
+  outline: 2px solid rgb(196 154 108 / 0.9);
+  outline-offset: 3px;
 }
 .navbar-greeting {
   color: var(--text-light);
@@ -179,7 +308,7 @@ button {
   padding: 2rem;
   box-shadow: 0 4px 15px var(--shadow);
   margin-bottom: 2rem;
-  animation: fadeIn 0.3s ease;
+  animation: liftIn 0.6s ease both;
 }
 .dashboard-grid {
   display: grid;
@@ -195,11 +324,22 @@ button {
   text-align: center;
   transition:
     transform var(--transition-speed),
-    box-shadow var(--transition-speed);
+    box-shadow var(--transition-speed),
+    filter var(--transition-speed);
+  animation: liftIn 0.6s ease both;
 }
 .dashboard-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-5px) scale(1.01);
   box-shadow: 0 6px 20px var(--shadow);
+}
+.dashboard-card:active,
+.weekly-item:active,
+.change-name-btn:active,
+.btn:active,
+.primary-btn:active,
+.reset-btn:active,
+.toggle-switch:active {
+  transform: translateY(0) scale(0.98);
 }
 .dashboard-card-icon {
   font-size: 2.5rem;
@@ -230,6 +370,7 @@ button {
   max-width: 500px;
   margin: 0 auto;
   text-align: center;
+  animation: liftIn 0.65s ease both;
 }
 
 .card,
@@ -254,6 +395,7 @@ button {
   max-width: 680px;
   margin: 0 auto;
   text-align: left;
+  animation: liftIn 0.65s ease both;
 }
 
 .about-card .about-image {
@@ -410,6 +552,28 @@ button {
   border-left: 4px solid var(--accent-color);
   background-color: rgb(196 154 108 / 0.1);
   text-align: center;
+  transition:
+    transform var(--transition-speed),
+    opacity var(--transition-speed),
+    background-color var(--transition-speed),
+    border-color var(--transition-speed);
+}
+.status-message.is-success,
+.status-message.is-error,
+.status-message.is-updated {
+  animation: statusLift 260ms ease;
+}
+.status-message.is-success {
+  background-color: rgb(76 175 80 / 0.12);
+  border-left-color: #4caf50;
+}
+.status-message.is-error {
+  background-color: rgb(244 67 54 / 0.12);
+  border-left-color: #f44336;
+}
+.status-message.is-updated {
+  background-color: rgb(196 154 108 / 0.14);
+  border-left-color: var(--accent-color);
 }
 .btn,
 .primary-btn,
@@ -426,18 +590,32 @@ button[type="submit"] {
   cursor: pointer;
   transition:
     transform var(--transition-speed),
-    box-shadow var(--transition-speed);
+    box-shadow var(--transition-speed),
+    filter var(--transition-speed);
   width: 100%;
+  -webkit-tap-highlight-color: #fff0;
 }
 .btn:hover,
 .primary-btn:hover,
 .reset-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgb(196 154 108 / 0.4);
+  filter: saturate(1.02);
 }
 .btn:active,
 .primary-btn:active {
   transform: translateY(0);
+}
+.btn.is-pressed,
+.primary-btn.is-pressed,
+.reset-btn.is-pressed {
+  transform: translateY(0) scale(0.98);
+}
+.btn[disabled],
+.primary-btn[disabled],
+.reset-btn[disabled] {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 body.modal-open {
   overflow: hidden;
@@ -579,13 +757,15 @@ body.modal-open {
   color: #fff;
   font-weight: 600;
   font-size: 0.85rem;
-  transition: width 0.5s ease;
+  transition: width 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: width;
 }
 .weekly-card {
   background-color: var(--card-bg);
   border-radius: 16px;
   padding: 2rem;
   box-shadow: 0 4px 15px var(--shadow);
+  animation: liftIn 0.6s ease both;
 }
 .weekly-title {
   font-size: 1.5rem;
@@ -604,10 +784,15 @@ body.modal-open {
   border-radius: 12px;
   padding: 1rem;
   text-align: center;
-  transition: transform var(--transition-speed);
+  transition:
+    transform var(--transition-speed),
+    background-color var(--transition-speed),
+    box-shadow var(--transition-speed),
+    color var(--transition-speed);
+  animation: liftIn 0.55s ease both;
 }
 .weekly-item:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.01);
 }
 .weekly-item.current-day {
   background: linear-gradient(135deg, var(--accent-color), #8b7355);
@@ -648,6 +833,7 @@ body.modal-open {
   text-align: center;
   max-width: 500px;
   margin: 0 auto 2rem;
+  animation: liftIn 0.65s ease both;
 }
 .profile-avatar {
   width: 120px;
@@ -655,6 +841,7 @@ body.modal-open {
   border-radius: 50%;
   margin: 0 auto 1rem;
   border: 4px solid var(--accent-color);
+  animation: popIn 0.7s ease both;
 }
 .profile-name {
   font-size: 1.8rem;
@@ -670,11 +857,18 @@ body.modal-open {
   border: 2px solid var(--accent-color);
   border-radius: 10px;
   font-weight: 600;
-  transition: all var(--transition-speed);
+  transition:
+    transform var(--transition-speed),
+    background-color var(--transition-speed),
+    color var(--transition-speed),
+    border-color var(--transition-speed),
+    box-shadow var(--transition-speed);
 }
 .change-name-btn:hover {
   background-color: var(--accent-color);
   color: var(--text-light);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgb(196 154 108 / 0.24);
 }
 .settings-card {
   background-color: var(--card-bg);
@@ -682,6 +876,7 @@ body.modal-open {
   padding: 2rem;
   box-shadow: 0 4px 15px var(--shadow);
   margin-bottom: 2rem;
+  animation: liftIn 0.65s ease both;
 }
 .settings-title {
   font-size: 1.3rem;
@@ -702,6 +897,44 @@ body.modal-open {
   font-weight: 600;
   color: var(--text-dark);
 }
+.toggle-switch {
+  position: relative;
+  width: 58px;
+  height: 34px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: rgb(90 62 43 / 0.22);
+  box-shadow: inset 0 0 0 1px rgb(90 62 43 / 0.12);
+  padding: 4px;
+  transition:
+    background-color var(--transition-speed),
+    box-shadow var(--transition-speed),
+    transform var(--transition-speed);
+  cursor: pointer;
+  -webkit-tap-highlight-color: #fff0;
+}
+.toggle-switch.active {
+  background: linear-gradient(135deg, var(--accent-color), #8b7355);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.2);
+}
+.toggle-switch:hover {
+  transform: translateY(-1px);
+}
+.toggle-switch.active .toggle-slider {
+  transform: translateX(24px);
+}
+.toggle-switch.is-updating .toggle-slider {
+  animation: togglePop 260ms ease;
+}
+.toggle-slider {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.16);
+  transform: translateX(0);
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
 .quote-container {
   background: linear-gradient(135deg, var(--accent-color), #8b7355);
   color: #fff;
@@ -710,16 +943,121 @@ body.modal-open {
   text-align: center;
   box-shadow: 0 6px 20px var(--shadow);
   margin-bottom: 2rem;
+  animation: liftIn 0.65s ease both;
 }
 .quote-text {
   font-size: 1.5rem;
   font-weight: 600;
   line-height: 1.6;
   margin-bottom: 1rem;
+  transition:
+    opacity var(--motion-medium) ease,
+    transform var(--motion-medium) ease;
 }
 .quote-author {
   font-size: 1rem;
   opacity: 0.9;
+  transition:
+    opacity var(--motion-medium) ease,
+    transform var(--motion-medium) ease;
+}
+.quote-container.is-changing .quote-text,
+.quote-container.is-changing .quote-author {
+  opacity: 0;
+  transform: translateY(8px) scale(0.985);
+}
+.quote-container:not(.is-changing) .quote-text,
+.quote-container:not(.is-changing) .quote-author {
+  animation: quoteFadeIn var(--motion-medium) ease;
+}
+.quote-container.is-changing {
+  animation: quoteFadeOut var(--motion-medium) ease;
+}
+.quote-container #newQuoteBtn,
+.quote-container .btn {
+  transform-origin: center;
+}
+.quote-container #newQuoteBtn:hover,
+.quote-container .btn:hover {
+  transform: translateY(-2px) rotate(-0.5deg) scale(1.01);
+}
+.quote-container #newQuoteBtn:active,
+.quote-container .btn:active {
+  transform: translateY(0) rotate(0deg) scale(0.98);
+}
+#newQuoteBtn:hover {
+  transform: translateY(-2px) rotate(-1deg) scale(1.02);
+}
+#newQuoteBtn:active {
+  transform: translateY(0) rotate(0deg) scale(0.98);
+}
+.step-counter-card .step-number {
+  display: inline-block;
+  transition: transform var(--transition-speed), color var(--transition-speed);
+}
+.step-counter-card.step-pulse .step-number,
+.step-counter-card.step-pulse .progress-ring {
+  animation: stepPulse 280ms ease;
+}
+.step-counter-card.goal-achieved {
+  animation: goalPulse 1.1s ease;
+}
+.progress-ring-circle {
+  transition: stroke-dashoffset 620ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: stroke-dashoffset;
+}
+.dashboard-grid > *,
+.weekly-list > * {
+  opacity: 0;
+  transform: translateY(14px) scale(0.985);
+  animation: liftIn 0.6s ease forwards;
+}
+.dashboard-grid > *:nth-child(1),
+.weekly-list > *:nth-child(1) {
+  animation-delay: 0.04s;
+}
+.dashboard-grid > *:nth-child(2),
+.weekly-list > *:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.dashboard-grid > *:nth-child(3),
+.weekly-list > *:nth-child(3) {
+  animation-delay: 0.16s;
+}
+.dashboard-grid > *:nth-child(4),
+.weekly-list > *:nth-child(4) {
+  animation-delay: 0.22s;
+}
+.dashboard-grid > *:nth-child(5),
+.weekly-list > *:nth-child(5) {
+  animation-delay: 0.28s;
+}
+.dashboard-grid > *:nth-child(6),
+.weekly-list > *:nth-child(6) {
+  animation-delay: 0.34s;
+}
+.dashboard-grid > *:nth-child(7),
+.weekly-list > *:nth-child(7) {
+  animation-delay: 0.4s;
+}
+.progress-bar-fill {
+  will-change: width;
+}
+.progress-bar-fill.goal-reached {
+  animation: goalPulse 1s ease;
+}
+.card.goal-reached {
+  animation: goalPulse 1s ease;
+}
+.status-message.is-updated,
+.status-message.is-success,
+.status-message.is-error {
+  will-change: transform, opacity;
+}
+.is-updated,
+.is-success,
+.is-error {
+  animation: statusLift 260ms ease;
 }
 body.dark {
   background-color: #1e1e1e;
@@ -969,6 +1307,29 @@ body.dark .navbar-greeting {
     animation-duration: 0.01ms;
     animation-iteration-count: 1;
     transition-duration: 0.01ms;
+    scroll-behavior: auto;
+  }
+  .dashboard-grid > *,
+  .weekly-list > *,
+  .card,
+  .dashboard-card,
+  .weekly-card,
+  .food-card,
+  .profile-card,
+  .settings-card,
+  .quote-container,
+  .step-counter-card,
+  .about-card,
+  .profile-avatar,
+  .progress-ring-circle,
+  .quote-container.is-changing,
+  .step-counter-card.step-pulse .step-number,
+  .step-counter-card.step-pulse .progress-ring,
+  .step-counter-card.goal-achieved,
+  .progress-bar-fill.goal-reached,
+  .toggle-switch.is-updating .toggle-slider {
+    animation: none !important;
+    transform: none !important;
   }
 }
 @supports (-webkit-touch-callout: none) {

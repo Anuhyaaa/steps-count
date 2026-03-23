@@ -4,13 +4,16 @@ const STEP_LENGTH_KM = 0.00075;
 const STEP_UPPER_THRESHOLD = 11.6;
 const STEP_LOWER_THRESHOLD = 10.2;
 const STEP_COOLDOWN = 350;
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 let stepCount = 0;
+let displayedStepCount = 0;
 let distanceKm = 0;
 let lastStepTime = 0;
 let stepArmed = false;
 let isTracking = false;
 let motionListenerAttached = false;
+let stepCountAnimationFrame = null;
 
 const stepCountElement = document.getElementById('stepNumber');
 const caloriesElement = document.getElementById('calories');
@@ -19,12 +22,72 @@ const resetBtn = document.getElementById('resetBtn');
 const startTrackingBtn = document.getElementById('startTrackingBtn');
 const statusMessage = document.getElementById('statusMessage');
 const progressCircle = document.querySelector('.progress-ring-circle');
+const stepCounterCard = document.querySelector('.step-counter-card');
 const dateDisplay = document.getElementById('dateDisplay');
 
 function setStatus(message) {
 	if (statusMessage) {
 		statusMessage.textContent = message;
 	}
+}
+
+// Animates the counter so step changes feel smooth without blocking sensor updates.
+function animateStepCount(targetValue) {
+	if (!stepCountElement) {
+		return;
+	}
+
+	if (stepCountAnimationFrame !== null) {
+		cancelAnimationFrame(stepCountAnimationFrame);
+		stepCountAnimationFrame = null;
+	}
+
+	const startValue = displayedStepCount;
+
+	if (prefersReducedMotion || startValue === targetValue) {
+		displayedStepCount = targetValue;
+		stepCountElement.textContent = targetValue.toLocaleString();
+		return;
+	}
+
+	const duration = 360;
+	const startTime = performance.now();
+	const delta = targetValue - startValue;
+
+	const tick = (now) => {
+		const progress = Math.min((now - startTime) / duration, 1);
+		const eased = 1 - Math.pow(1 - progress, 3);
+		const currentValue = Math.round(startValue + delta * eased);
+
+		displayedStepCount = currentValue;
+		stepCountElement.textContent = currentValue.toLocaleString();
+
+		if (progress < 1) {
+			stepCountAnimationFrame = requestAnimationFrame(tick);
+			return;
+		}
+
+		displayedStepCount = targetValue;
+		stepCountElement.textContent = targetValue.toLocaleString();
+		stepCountAnimationFrame = null;
+	};
+
+	stepCountAnimationFrame = requestAnimationFrame(tick);
+}
+
+// Adds a small pulse when the card receives a new step update.
+function pulseStepCard() {
+	if (!stepCounterCard || prefersReducedMotion) {
+		return;
+	}
+
+	stepCounterCard.classList.remove('step-pulse');
+	void stepCounterCard.offsetWidth;
+	stepCounterCard.classList.add('step-pulse');
+
+	window.setTimeout(() => {
+		stepCounterCard.classList.remove('step-pulse');
+	}, 320);
 }
 
 function isIOSPermissionFlow() {
@@ -96,8 +159,18 @@ function saveToWeeklyData(dateString, steps) {
 	localStorage.setItem('fitTrackWeekly', JSON.stringify(weeklyData));
 }
 
-function updateDisplay() {
-	if (stepCountElement) {
+function updateDisplay(options = {}) {
+	const animateCount = options.animateCount !== false;
+
+	if (animateCount) {
+		animateStepCount(stepCount);
+	} else if (stepCountElement) {
+		if (stepCountAnimationFrame !== null) {
+			cancelAnimationFrame(stepCountAnimationFrame);
+			stepCountAnimationFrame = null;
+		}
+
+		displayedStepCount = stepCount;
 		stepCountElement.textContent = stepCount.toLocaleString();
 	}
 
@@ -115,7 +188,17 @@ function updateDisplay() {
 		const circumference = 2 * Math.PI * radius;
 		const progress = Math.min(stepCount / DAILY_GOAL, 1);
 		const offset = circumference - progress * circumference;
+
+		progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
 		progressCircle.style.strokeDashoffset = offset;
+	}
+
+	if (stepCounterCard) {
+		if (stepCount >= DAILY_GOAL) {
+			stepCounterCard.classList.add('goal-achieved');
+		} else {
+			stepCounterCard.classList.remove('goal-achieved');
+		}
 	}
 }
 
@@ -136,7 +219,8 @@ function registerStep(magnitude) {
 		magnitude: Number(magnitude.toFixed(2)),
 	});
 
-	updateDisplay();
+	updateDisplay({ animateCount: true });
+	pulseStepCard();
 	saveStepsToStorage();
 
 	if (stepCount === DAILY_GOAL) {
@@ -245,7 +329,7 @@ function resetSteps() {
 	stepCount = 0;
 	distanceKm = 0;
 	resetStepDetection();
-	updateDisplay();
+	updateDisplay({ animateCount: true });
 	saveStepsToStorage();
 
 	if (isTracking) {
@@ -261,7 +345,7 @@ function init() {
 	setStatus('Initializing...');
 	displayDate();
 	loadStepsFromStorage();
-	updateDisplay();
+	updateDisplay({ animateCount: !prefersReducedMotion });
 
 	if (resetBtn) {
 		resetBtn.addEventListener('click', resetSteps);
